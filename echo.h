@@ -1,6 +1,6 @@
 #ifndef ECHO_H
 #define ECHO_H
 
-void echo(char** argv);
+void echo(int, char**);
 
 #endif

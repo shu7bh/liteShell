@@ -4,7 +4,8 @@
 int tokenize(char* inputBuffer, char** argv, int* argc, int* bgprocess)
 {
     char* token;
-    token = strtok_r(inputBuffer, " \t\r", &inputBuffer);
+    char* safePtr;
+    token = strtok_r(inputBuffer, " \t\r", &safePtr);
     argv[0] = token;
 
     int flag = 0;
@@ -14,7 +15,7 @@ int tokenize(char* inputBuffer, char** argv, int* argc, int* bgprocess)
 
     *argc = 0;
 
-    while ((token = strtok_r(inputBuffer, " \t\r", &inputBuffer)))
+    while ((token = strtok_r(NULL, " \t\r", &safePtr)))
         argv[++*argc] = token;
 
     if (*argc > flag && flag)

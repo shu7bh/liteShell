@@ -1,6 +1,7 @@
 #include "repeat.h"
 #include "headers.h"
 #include "makeChild.h"
+#include "stringToNum.h"
 #include <stdlib.h>
 
 void repeat(int argc, char** argv)
@@ -11,18 +12,7 @@ void repeat(int argc, char** argv)
         return;
     }
 
-    int num = 0;
-    for (int i = 0; i < strlen(argv[1]); ++i)
-    {
-        num *= 10;
-        int ascii = argv[1][i] - '0';
-        if (ascii > 9 || ascii < 0)
-        {
-            printf("repeat error: Number is not provided\n");
-            return;
-        }
-        num += ascii;
-    }
+    int num = stringToNum(argv[1]);
 
     for (int i = 0; i < num; ++i)
         makeChildFg(argv + 2);

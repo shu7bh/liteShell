@@ -1,5 +1,6 @@
 #include "makeChild.h"
 #include "headers.h"
+#include "linkedList.h"
 #include <stdlib.h>
 
 void makeChildFg(char** argv)
@@ -32,9 +33,12 @@ void makeChildBg(char** argv)
     pid = fork();
     if (pid == 0) // Child process
     {
-        setpgid(pid, pid);
-        if (execvp(argv[0], argv))
+        if (execvp(argv[0], argv) == -1)
+        {
+            char temp[100];
             perror("Command not found");
+        }
+
         exit(0);
     }
 
@@ -43,7 +47,7 @@ void makeChildBg(char** argv)
 
     else // Parent process
     {
-        setpgid(pid, pid);
+        addProcess(argv[0], pid);
         printf("%u\n", pid);
     }
 }

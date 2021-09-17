@@ -2,6 +2,7 @@
 #include "headers.h"
 #include "makeChild.h"
 #include "stringToNum.h"
+#include "callWriitenFunctions.h"
 #include <stdlib.h>
 
 void repeat(int argc, char** argv)
@@ -15,5 +16,6 @@ void repeat(int argc, char** argv)
     int num = stringToNum(argv[1]);
 
     for (int i = 0; i < num; ++i)
-        makeChildFg(argv + 2);
+        if (!callWrittenFunctions(argv + 2, argc - 2))
+            makeChildFg(argv + 2);
 }

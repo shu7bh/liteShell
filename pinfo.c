@@ -31,7 +31,7 @@ void pinfo(int argc, char **argv)
 
     int fgFlag = !strcmp(statString[0], statString[7]);
 
-    sprintf(filepath, "/proc/%d/exe/", pid);
+    sprintf(filepath, "/proc/%d/exe", pid);
 
     char executablepath[1024];
     int len = readlink(filepath, executablepath, sizeof(executablepath));
@@ -46,10 +46,9 @@ void pinfo(int argc, char **argv)
 
     char relativePath[1024];
 
-    printf("%s %s\n", executablepath, getHomeDir());
     if (!strcmp(executablepath, getHomeDir()))
         sprintf(relativePath, "~");
-    else if (!strstr(executablepath, getHomeDir()))
+    else if (strstr(executablepath, getHomeDir()))
         sprintf(relativePath, "~%s", executablepath + strlen(getHomeDir()));
     else
         sprintf(relativePath, "%s", executablepath);

@@ -2,7 +2,7 @@
 #include "headers.h"
 #include "stringToNum.h"
 
-char* his[20] = {0};
+char* his[21] = {0};
 int start;
 int end;
 
@@ -14,21 +14,21 @@ void addCommand(char* command)
     loadHistory();
 
     if (end)
-        if (!strcmp(his[(end - 1) % 20], command))
+        if (!strcmp(his[(end - 1) % 21], command))
             return;
-        else if (his[end % 20])
+        else if (his[end % 21])
         {
-            free(his[end % 20]);
-            his[end % 20] = strdup(command);
+            free(his[end % 21]);
+            his[end % 21] = strdup(command);
             ++end;
-            if (start % 20 == end % 20)
+            if (start % 21 == end % 21)
                 ++start;
         }
         else
         {
-            his[end % 20] = strdup(command);
+            his[end % 21] = strdup(command);
             ++end;
-            if (start % 20 == end % 20)
+            if (start % 21 == end % 21)
                 ++start;
         }
     else
@@ -50,7 +50,7 @@ void loadHistory()
     if (fp)
     {
         ssize_t read;
-        while (end < 20 && (read = getline(&string, &size, fp) != -1))
+        while (end < 21 && (read = getline(&string, &size, fp) != -1))
         {
             string[strlen(string) - 1] = 0;
             his[end++] = strdup(string);
@@ -66,7 +66,7 @@ void writeHistory()
 
     if (fp)
     {
-        for (int i = start; i % 20 != end % 20; ++i)
+        for (int i = start; i % 21 != end % 21; ++i)
             fprintf(fp, "%s\n", his[i]);
 
         fclose(fp);
@@ -77,14 +77,17 @@ void printCommand(int argc, char** argv)
 {
     loadHistory();
     int ct;
+
+    ct = argc? stringToNum(argv[1]) : 10;
+
     if (argc)
     {
-        ct = stringToNum(argv[1]);
-        for (int i = end - ct + 20; i % 20 != end % 20; ++i)
-            if (his[i % 20])
-                printf("%s\n", his[i % 20]);
+        for (int i = end - ct + 21; i % 21 != end % 21; ++i)
+            if (his[i % 21])
+                printf("%s\n", his[i % 21]);
     }
     else
-        for (int i = start; i % 20 != end % 20 && i < start + 10; ++i)
-            printf("%s\n", his[i % 20]);
+        for (int i = end - 1; i >= 0 && i + 11 != end; --i)
+            if (his[i % 21])
+                printf("%s\n", his[i % 21]);
 }

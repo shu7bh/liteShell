@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# History file
+history.txt
+
 # Object files
 *.o
 *.ko

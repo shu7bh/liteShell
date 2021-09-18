@@ -3,8 +3,9 @@
 #include "runCommand.h"
 #include "headers.h"
 #include "linkedList.h"
-#include <signal.h>
+#include "history.h"
 #include "processTermination.h"
+#include <signal.h>
 
 int main()
 {
@@ -22,6 +23,9 @@ int main()
         char* token;
         char* safePtr;
         for (token = strtok_r(inputBuf, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
+        {
+            addCommand(token);
             runCommand(token);
+        }
     }
 }

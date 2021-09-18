@@ -1,0 +1,16 @@
+ls .
+pwd
+history
+history 3
+exit
+history
+history 4
+exit
+history 15
+history 20
+history 19
+echo "hello"
+repeat 3 sleep 4
+cat history.txt
+ls -al 
+exit

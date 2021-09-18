@@ -6,6 +6,7 @@
 #include "pinfo.h"
 #include "echo.h"
 #include "repeat.h"
+#include "history.h"
 #include <stdlib.h>
 
 int callWrittenFunctions(char** argv, int argc)
@@ -27,6 +28,8 @@ int callWrittenFunctions(char** argv, int argc)
         repeat(argc, argv);
     else if (!strcmp(argv[0], "pinfo"))
         pinfo(argc, argv);
+    else if (!strcmp(argv[0], "history"))
+        printCommand(argc, argv);
     else
         present = 0;
     return present;

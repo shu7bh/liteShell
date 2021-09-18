@@ -32,7 +32,7 @@ int ls(int argc, char** argv)
             dirs[dirCt++] = getHomeDir();
         else
         {
-            if (argv[i][strlen(argv[i]) - 1] == '/')
+            if (argv[i][strlen(argv[i]) - 1] == '/' && argv[i][strlen(argv[i])] > 1)
                 argv[i][strlen(argv[i]) - 1] = 0;
             dirs[dirCt++] = argv[i];
         }

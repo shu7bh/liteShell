@@ -8,7 +8,7 @@ int cd(char* argv)
     char temp[1000];
 
     getcwd(temp, 1000);
-    if (!strcmp(argv, "") || !strcmp(argv, "~"))
+    if (!argv || !strcmp(argv, "~"))
         chdir(getHomeDir());
     else if (!strcmp(argv, "-"))
     {

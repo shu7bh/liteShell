@@ -55,6 +55,7 @@ void pinfo(int argc, char **argv)
 
     printf("pid -- %s\nProcess Status -- %s%s\nmemory -- %s\nExecutable Path -- %s\n", statString[0], statString[2], fgFlag ? "+" : "", statString[22], relativePath);
 
+    for (int i = 0; statString[i]; ++i)
+        free(statString[i]);
     free(statString);
-    free(string);
 }

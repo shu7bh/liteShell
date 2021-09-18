@@ -3,16 +3,17 @@
 #include "runCommand.h"
 #include "headers.h"
 #include "linkedList.h"
-#include "history.h"
 #include "colors.h"
 #include "processTermination.h"
 #include <signal.h>
+#include <stdlib.h>
+#include "history.h"
+
 
 int main()
 {
     makeProcessLinkedList();
     setPromptVar();
-    setInputVar();
     reset();
 
     signal(SIGCHLD, handleProcessTermination);
@@ -20,14 +21,15 @@ int main()
     while (1)
     {
         prompt();
-        char* inputBuf = input();
+        char* inp = input();
 
-        char* token;
-        char* safePtr;
-        for (token = strtok_r(inputBuf, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
+        char* token, *safePtr;
+
+        for (token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
         {
             addCommand(token);
             runCommand(token);
         }
     }
+    return 0;
 }

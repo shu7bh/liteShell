@@ -1,6 +1,7 @@
 #include "prompt.h"
 #include "homeDir.h"
 #include "headers.h"
+#include "colors.h"
 
 char name[33], hostname[60], lprompt[1000], cwd[1000];
 void setPromptVar()
@@ -22,7 +23,10 @@ void prompt()
             sprintf(varPrompt, "~%s", cwd + strlen(getHomeDir()));
         else
             sprintf(varPrompt, "%s", cwd);
+
+        cPrompt();
         printf("%s%s> ", lprompt, varPrompt);
+        reset();
     }
     else
         perror("getcwd() error");

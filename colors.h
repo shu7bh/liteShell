@@ -4,7 +4,10 @@
 void green();
 void blue();
 void red();
+void yellow();
+void magenta();
 void reset();
+void cPrompt();
 
 #endif
 

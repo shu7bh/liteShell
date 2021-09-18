@@ -1,19 +1,19 @@
--rw-r--r--     1           shu7bh           shu7bh       77  Sep 17 23:51   stringToNum.h
--rw-r--r--     1           shu7bh           shu7bh      181  Sep 15 13:27   homeDir.c
--rw-r--r--     1           shu7bh           shu7bh      115  Sep 17 11:18   makeChild.h
--rw-r--r--     1           shu7bh           shu7bh      831  Sep 17 23:37   linkedList.c
--rw-r--r--     1           shu7bh           shu7bh      104  Sep 17 15:55   token.h
--rw-r--r--     1           shu7bh           shu7bh       59  Sep 15 12:02   cwd.h
--rw-r--r--     1           shu7bh           shu7bh      166  Sep 18 01:10   echo.c
--rw-r--r--     1           shu7bh           shu7bh      120  Sep 18 01:57   callWriitenFunctions.h
--rw-r--r--     1           shu7bh           shu7bh     1443  Sep 18 01:37   pinfo.c
--rw-r--r--     1           shu7bh           shu7bh      147  Sep 18 13:00   history.txt
-history
+ls .
 clear
+ls -l
 exit
-echo "hello ji"
-sleep 4
-repeat 2 repeat 2 repeat 2 repeat 2 ls
-clear
-ls
+ls .
+ls -al
 exit
+ls -al
+exit
+ls -al
+exit
+ls -l
+exit
+ls -al
+exit
+ls -al
+ls / -l
+exit
+ls fjkdlf

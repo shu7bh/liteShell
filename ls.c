@@ -1,6 +1,7 @@
 #include "ls.h"
 #include "homeDir.h"
 #include "headers.h"
+#include "colors.h"
 #include <dirent.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -120,6 +121,13 @@ void printStats(const char* fullName, const char* name)
     struct stat statInfo;
     lstat(fullName, &statInfo);
 
+    if (S_ISLNK(statInfo.st_mode))
+        magenta();
+    else if (S_ISDIR(statInfo.st_mode))
+        blue();
+    else
+        yellow();
+
     printf((S_ISLNK(statInfo.st_mode)) ? "l" : (S_ISDIR(statInfo.st_mode))? "d" : "-");
     printf((statInfo.st_mode & S_IRUSR) ? "r" : "-");
     printf((statInfo.st_mode & S_IWUSR) ? "w" : "-");
@@ -157,4 +165,6 @@ void printStats(const char* fullName, const char* name)
 
     printf("  %s ", time_val);
     printf("  %s\n", name);
+
+    reset();
 }

@@ -4,6 +4,7 @@
 #include "headers.h"
 #include "linkedList.h"
 #include "history.h"
+#include "colors.h"
 #include "processTermination.h"
 #include <signal.h>
 
@@ -12,6 +13,7 @@ int main()
     makeProcessLinkedList();
     setPromptVar();
     setInputVar();
+    reset();
 
     signal(SIGCHLD, handleProcessTermination);
 

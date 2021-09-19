@@ -19,7 +19,7 @@ make
 - It accounts for tabs and spaces.
 - Accessing history through up and down arrow key
 - Different colours for file and directories
-  
+
 ## Commands
 
 - cd: Change directory Multiple flags are handled
@@ -108,8 +108,4 @@ If you want to exit the shell, type exit
 
 ## Screenshots
 
-![ls](Pics/ls.png)
-![echo](Pics/echo.png)
-![pinfo](Pics/pinfo.png)
-![cd and repeat](Pics/cdandrepeat.png)
-![history](Pics/history.png)
+![ss](Pics/ss.png)

@@ -4,10 +4,15 @@
 
 int cd(char* argv)
 {
-    char prevDir[1000];
-    char temp[1000];
+    static char prevDir[1000];
 
+    static int ct = 0;
+    if (!ct++)
+        strcpy(prevDir, getHomeDir());
+
+    char temp[1000];
     getcwd(temp, 1000);
+
     if (!argv || !strcmp(argv, "~"))
         chdir(getHomeDir());
     else if (!strcmp(argv, "-"))

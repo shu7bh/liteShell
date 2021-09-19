@@ -1,5 +1,6 @@
 #include "history.h"
 #include "headers.h"
+#include "homeDir.h"
 #include "stringToNum.h"
 
 char* his[21] = {0};
@@ -39,7 +40,9 @@ void addCommand(char* command)
 
 void loadHistory()
 {
-    FILE* fp = fopen("history.txt", "r");
+    char path[1000];
+    sprintf(path, "%s/history.txt", getHomeDir());
+    FILE* fp = fopen(path, "r");
 
     start = 0;
     end = 0;
@@ -62,7 +65,9 @@ void loadHistory()
 
 void writeHistory()
 {
-    FILE* fp = fopen("history.txt", "w");
+    char path[1000];
+    sprintf(path, "%s/history.txt", getHomeDir());
+    FILE* fp = fopen(path, "w");
 
     if (fp)
     {
@@ -80,14 +85,29 @@ void printCommand(int argc, char** argv)
 
     ct = argc? stringToNum(argv[1]) : 10;
 
-    if (argc)
-    {
-        for (int i = end - ct + 21; i % 21 != end % 21; ++i)
-            if (his[i % 21])
-                printf("%s\n", his[i % 21]);
-    }
-    else
-        for (int i = end - 1; i >= 0 && i + 11 != end; --i)
-            if (his[i % 21])
-                printf("%s\n", his[i % 21]);
+    for (int i = end - ct + 21; i % 21 != end % 21; ++i)
+        if (his[i % 21])
+            printf("%s\n", his[i % 21]);
+}
+
+char* getNextHistory(int* prev)
+{
+    loadHistory();
+
+    if (end > *prev)
+        return his[end - ++(*prev)];
+
+    return his[end - *prev];
+}
+
+char* getPrevHistory(int* prev)
+{
+    loadHistory();
+
+    if (*prev >= 2)
+        return his[end - --(*prev)];
+    else if (*prev >= 1)
+        --(*prev);
+
+    return "";
 }

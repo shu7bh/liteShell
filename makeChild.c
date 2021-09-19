@@ -33,6 +33,7 @@ void makeChildBg(char** argv)
     pid = fork();
     if (pid == 0) // Child process
     {
+        setpgid(0, 0);
         if (execvp(argv[0], argv) == -1)
         {
             char temp[100];

@@ -20,7 +20,6 @@ void handleProcessTermination(int sig)
             fprintf(stderr, "%s with pid = %d exited abnormally\n", name, pid);
 
         prompt();
-        fflush(stderr);
         fflush(stdout);
     }
 }

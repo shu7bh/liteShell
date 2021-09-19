@@ -1,5 +1,6 @@
 #include "history.h"
 #include "headers.h"
+#include "homeDir.h"
 #include "stringToNum.h"
 
 char* his[21] = {0};
@@ -39,7 +40,9 @@ void addCommand(char* command)
 
 void loadHistory()
 {
-    FILE* fp = fopen("history.txt", "r");
+    char path[1000];
+    sprintf(path, "%s/history.txt", getHomeDir());
+    FILE* fp = fopen(path, "r");
 
     start = 0;
     end = 0;
@@ -62,7 +65,9 @@ void loadHistory()
 
 void writeHistory()
 {
-    FILE* fp = fopen("history.txt", "w");
+    char path[1000];
+    sprintf(path, "%s/history.txt", getHomeDir());
+    FILE* fp = fopen(path, "w");
 
     if (fp)
     {

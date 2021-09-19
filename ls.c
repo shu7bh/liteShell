@@ -12,6 +12,7 @@
 
 void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt);
 void printStats(const char* dir, const char* name);
+void colors(const char* fullName);
 
 int ls(int argc, char** argv)
 {
@@ -41,8 +42,45 @@ int ls(int argc, char** argv)
     if (!dirCt)
         dirs[dirCt++] = ".";
 
+    int flag = 0;
+
     for (int i = 0; i < dirCt; ++i)
-        SearchDir(a_flag, l_flag, dirs[i], dirCt);
+    {
+        struct dirent *directory;
+        DIR *d = opendir(dirs[i]);
+
+        if (!d)
+            if (access(dirs[i], F_OK) != 0)
+            {
+                char error[1000];
+                sprintf(error, "ls: cannot access '%s'", dirs[i]);
+                perror(error);
+                ++flag;
+                continue;
+            }
+    }
+
+    for (int i = 0; i < dirCt; ++i)
+    {
+        struct dirent *directory;
+        DIR *d = opendir(dirs[i]);
+
+        if (!d)
+            if (access(dirs[i], F_OK) == 0)
+                SearchDir(a_flag, l_flag, dirs[i], dirCt), ++flag;
+    }
+
+    if (flag)
+        printf("\n");
+
+    for (int i = 0; i < dirCt; ++i)
+    {
+        struct dirent *directory;
+        DIR *d = opendir(dirs[i]);
+
+        if (d)
+            SearchDir(a_flag, l_flag, dirs[i], dirCt);
+    }
 
     return 0;
 }
@@ -54,20 +92,10 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
 
     int file_flag = 0;
     if (!d)
-    {
-        if (access(dir, F_OK) == 0)
-            file_flag = 1;
-        else
-        {
-            char error[1000];
-            sprintf(error, "ls: cannot access '%s'", dir);
-            perror(error);
-            return;
-        }
-    }
+        file_flag = 1;
+
     if (!file_flag)
     {
-
         struct stat statInfo;
         lstat(dir, &statInfo);
 
@@ -92,7 +120,13 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
             {
                 if (!a_flag && directory->d_name[0] == '.')
                     continue;
+
+                char fullName[1000];
+                sprintf(fullName, "%s/%s", dir, directory->d_name);
+
+                colors(fullName);
                 printf("%s   ", directory->d_name);
+                reset();
             }
             else
             {
@@ -111,12 +145,16 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
     else if (l_flag)
         printStats(dir, dir);
     else
+    {
+        colors(dir);
         printf("%s\n", dir);
-    if (dirCt > 1)
+        reset();
+    }
+    if (dirCt > 1 && !l_flag)
         printf("\n");
 }
 
-void printStats(const char* fullName, const char* name)
+void colors(const char* fullName)
 {
     struct stat statInfo;
     lstat(fullName, &statInfo);
@@ -127,6 +165,14 @@ void printStats(const char* fullName, const char* name)
         blue();
     else
         yellow();
+}
+
+void printStats(const char* fullName, const char* name)
+{
+    struct stat statInfo;
+    lstat(fullName, &statInfo);
+
+    colors(fullName);
 
     printf((S_ISLNK(statInfo.st_mode)) ? "l" : (S_ISDIR(statInfo.st_mode))? "d" : "-");
     printf((statInfo.st_mode & S_IRUSR) ? "r" : "-");

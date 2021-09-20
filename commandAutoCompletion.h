@@ -1,0 +1,6 @@
+#ifndef COMMANDAUTOCOMPLETION_H
+#define COMMANDAUTOCOMPLETION_H
+
+
+
+#endif

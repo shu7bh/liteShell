@@ -20,12 +20,12 @@ void pinfo(int argc, char **argv)
         return;
     }
 
-    size_t size=1024;
+    size_t size = SIZE;
     char *string = malloc(size);
 
     getline(&string, &size, fp);
 
-    char** statString = malloc(60);
+    char** statString = malloc(55); // As there can be at most 52 tokens
     int ct, temp;
     tokenize(string, statString, &ct, &temp);
 
@@ -33,7 +33,7 @@ void pinfo(int argc, char **argv)
 
     sprintf(filepath, "/proc/%d/exe", pid);
 
-    char executablepath[1024];
+    char executablepath[SIZE];
     int len = readlink(filepath, executablepath, sizeof(executablepath));
 
     if(len == -1)
@@ -44,7 +44,7 @@ void pinfo(int argc, char **argv)
     else
         executablepath[len] = 0;
 
-    char relativePath[1024];
+    char relativePath[SIZE];
 
     if (!strcmp(executablepath, getHomeDir()))
         sprintf(relativePath, "~");

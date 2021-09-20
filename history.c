@@ -40,14 +40,14 @@ void addCommand(char* command)
 
 void loadHistory()
 {
-    char path[1000];
+    char path[SIZE];
     sprintf(path, "%s/history.txt", getHomeDir());
     FILE* fp = fopen(path, "r");
 
     start = 0;
     end = 0;
 
-    size_t size = 1000;
+    size_t size = SIZE;
     char* string = malloc(size);
 
     if (fp)
@@ -65,7 +65,7 @@ void loadHistory()
 
 void writeHistory()
 {
-    char path[1000];
+    char path[SIZE];
     sprintf(path, "%s/history.txt", getHomeDir());
     FILE* fp = fopen(path, "w");
 
@@ -83,7 +83,7 @@ void printCommand(int argc, char** argv)
     loadHistory();
     int ct;
 
-    ct = argc? stringToNum(argv[1]) : 10;
+    ct = argc? stringToNum(argv[1]) : 10; // To print only the last 10 commands
 
     for (int i = end - ct + 21; i % 21 != end % 21; ++i)
         if (his[i % 21])

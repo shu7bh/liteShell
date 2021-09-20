@@ -4,8 +4,8 @@
 
 const char* getCWD()
 {
-    char* cwd = malloc(1000);
-    getcwd(cwd, 1000);
+    char* cwd = malloc(SIZE);
+    getcwd(cwd, SIZE);
 
     return cwd;
 }

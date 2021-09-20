@@ -22,14 +22,11 @@ int main()
     {
         prompt();
         char* inp = input();
-
         char* token, *safePtr;
 
+        addCommand(inp);
         for (token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
-        {
-            addCommand(token);
             runCommand(token);
-        }
     }
     return 0;
 }

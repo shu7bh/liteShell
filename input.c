@@ -31,13 +31,13 @@ void enableRawMode()
 
 char* input()
 {
-    char *inp = malloc(sizeof(char) * 100);
+    char *inp = malloc(sizeof(char) * SIZE);
     char c;
 
     setbuf(stdout, NULL);
     enableRawMode();
 
-    memset(inp, '\0', 100);
+    memset(inp, '\0', SIZE);
     int pt = 0;
     int prev = 0;
     while (read(STDIN_FILENO, &c, 1) == 1)
@@ -88,6 +88,11 @@ char* input()
             }
             else if (c == 4)
                 exit(0);
+            else if (c == 12)
+            {
+                strcpy(inp, "clear");
+                break;
+            }
             else
                 printf("%d\n", c);
         }

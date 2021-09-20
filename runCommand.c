@@ -10,7 +10,7 @@ int callWrittenFunctions(char**, int);
 void runCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);
-    char** argv = malloc(10001);
+    char** argv = malloc(SIZE);
 
     int* argc = malloc(sizeof(int));
     int* bgprocess = malloc(sizeof(int));

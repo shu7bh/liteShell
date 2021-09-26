@@ -2,6 +2,7 @@
 #include "headers.h"
 #include "history.h"
 #include "prompt.h"
+#include "commandAutoCompletion.h"
 #include <termios.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -82,9 +83,10 @@ char* input()
             }
             else if (c == 9)  // TAB character
             {
-                inp[pt++] = c;
-                for (int i = 0; i < 8; i++)  // TABS should be 8 spaces
-                    printf(" ");
+                /*inp[pt++] = c;*/
+                /*for (int i = 0; i < 8; i++)  // TABS should be 8 spaces*/
+                    /*printf(" ");*/
+                autoComplete(inp);
             }
             else if (c == 4)
                 exit(0);

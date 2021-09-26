@@ -41,7 +41,7 @@ void addCommand(char* command)
 void loadHistory()
 {
     char path[SIZE];
-    sprintf(path, "%s/history.txt", getHomeDir());
+    sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "r");
 
     start = 0;
@@ -66,7 +66,7 @@ void loadHistory()
 void writeHistory()
 {
     char path[SIZE];
-    sprintf(path, "%s/history.txt", getHomeDir());
+    sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "w");
 
     if (fp)

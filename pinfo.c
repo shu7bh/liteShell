@@ -16,18 +16,14 @@ void pinfo(int argc, char **argv)
 
     if (!fp)
     {
-        perror("fopen error");
+        printf("Process doesn't exist\n");
         return;
     }
 
-    size_t size = SIZE;
-    char *string = malloc(size);
+    char statString[35][60]; // As there can be at most 52 tokens
 
-    getline(&string, &size, fp);
-
-    char** statString = malloc(55); // As there can be at most 52 tokens
-    int ct, temp;
-    tokenize(string, statString, &ct, &temp);
+    for (int i = 0; i < 30; ++i)
+        fscanf(fp, "%s", statString[i]);
 
     int fgFlag = !strcmp(statString[0], statString[7]);
 
@@ -35,14 +31,6 @@ void pinfo(int argc, char **argv)
 
     char executablepath[SIZE];
     int len = readlink(filepath, executablepath, sizeof(executablepath));
-
-    if(len == -1)
-    {
-        strcpy(executablepath, "NULL");
-        executablepath[4] = 0;
-    }
-    else
-        executablepath[len] = 0;
 
     char relativePath[SIZE];
 
@@ -54,8 +42,4 @@ void pinfo(int argc, char **argv)
         sprintf(relativePath, "%s", executablepath);
 
     printf("pid -- %s\nProcess Status -- %s%s\nmemory -- %s {Virtual Memory}\nExecutable Path -- %s\n", statString[0], statString[2], fgFlag ? "+" : "", statString[22], relativePath);
-
-    for (int i = 0; statString[i]; ++i)
-        free(statString[i]);
-    free(statString);
 }

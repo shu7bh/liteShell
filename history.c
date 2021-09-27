@@ -3,7 +3,7 @@
 #include "homeDir.h"
 #include "stringToNum.h"
 
-char* his[21] = {0};
+char his[21][SIZE] = {0};
 int start;
 int end;
 
@@ -19,21 +19,20 @@ void addCommand(char* command)
             return;
         else if (his[end % 21])
         {
-            free(his[end % 21]);
-            his[end % 21] = strdup(command);
+            strcpy(his[end % 21], strdup(command));
             ++end;
             if (start % 21 == end % 21)
                 ++start;
         }
         else
         {
-            his[end % 21] = strdup(command);
+            strcpy(his[end % 21], strdup(command));
             ++end;
             if (start % 21 == end % 21)
                 ++start;
         }
     else
-        his[end++] = strdup(command);
+        strcpy(his[end++], strdup(command));
 
     writeHistory();
 }
@@ -41,7 +40,7 @@ void addCommand(char* command)
 void loadHistory()
 {
     char path[SIZE];
-    sprintf(path, "%s/history.txt", getHomeDir());
+    sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "r");
 
     start = 0;
@@ -56,7 +55,7 @@ void loadHistory()
         while (end < 21 && (read = getline(&string, &size, fp) != -1))
         {
             string[strlen(string) - 1] = 0;
-            his[end++] = strdup(string);
+            strcpy(his[end++], strdup(string));
         }
         fclose(fp);
     }
@@ -66,7 +65,7 @@ void loadHistory()
 void writeHistory()
 {
     char path[SIZE];
-    sprintf(path, "%s/history.txt", getHomeDir());
+    sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "w");
 
     if (fp)

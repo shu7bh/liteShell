@@ -56,6 +56,7 @@ char* input()
                     {
                         printf("\33[2K\r");
                         prompt();
+                        memset(inp, '\0', SIZE);
                         strcpy(inp, getNextHistory(&prev));
                         printf("%s", inp);
                         pt = strlen(inp);
@@ -64,6 +65,7 @@ char* input()
                     {
                         printf("\33[2K\r");
                         prompt();
+                        memset(inp, '\0', SIZE);
                         strcpy(inp, getPrevHistory(&prev));
                         printf("%s", inp);
                         pt = strlen(inp);
@@ -106,6 +108,5 @@ char* input()
     }
     disableRawMode();
     printf("\n");
-
     return inp;
 }

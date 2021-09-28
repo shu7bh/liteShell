@@ -6,7 +6,9 @@
 
 void autoComplete(char* command)
 {
-    char* inp = strdup(command);
+    char inp[SIZE];
+    strcpy(inp, command);
+
     if (!strlen(inp))
         return;
 
@@ -43,8 +45,9 @@ void autoComplete(char* command)
     commandArg[1] = 0;
 
     makeChildFg(commandArg);
+    free(commandArg[0]);
 
-    fp = fopen("./.liteShell/return.txt", "r");
+    fp = fopen(".liteShell/return.txt", "r");
 
     if (!fp)
     {

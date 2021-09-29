@@ -30,6 +30,18 @@ void enableRawMode()
     if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
 }
 
+void commandComplete(char* inp, int len, int* pt)
+{
+    for (int i = 0; i < len; ++i)
+        printf("\b \b");
+
+    printf("%s", inp);
+    *pt = strlen(inp);
+
+    /*if (inp[strlen(inp)] == ' ')*/
+        /**ct = 0;*/
+}
+
 char* input()
 {
     char *inp = malloc(sizeof(char) * SIZE);
@@ -41,12 +53,15 @@ char* input()
     memset(inp, '\0', SIZE);
     int pt = 0;
     int prev = 0;
+    int commandCompleteCt = 0;
+
     while (read(STDIN_FILENO, &c, 1) == 1)
     {
         if (iscntrl(c))
         {
-            if (c == 10) break;
-            else if (c == 27)
+            if (c == 10)
+                break;
+            if (c == 27)
             {
                 char buf[3];
                 buf[2] = 0;
@@ -72,8 +87,9 @@ char* input()
                     }
                 }
             }
-            else if (c == 127)  // backspac e
+            else if (c == 127)  // backspace
             {
+                commandCompleteCt = 0;
                 if (pt > 0)
                 {
                     if (inp[pt-1] == 9)
@@ -85,13 +101,32 @@ char* input()
             }
             else if (c == 9)  // TAB character
             {
-                /*inp[pt++] = c;*/
-                /*for (int i = 0; i < 8; i++)  // TABS should be 8 spaces*/
-                    /*printf(" ");*/
-                autoComplete(inp);
+                int len = strlen(inp);
+                if (!autoComplete(inp, &commandCompleteCt, 1))
+                {
+                    commandCompleteCt = 0;
+                    inp[pt++] = c;
+                    for (int i = 0; i < 8; i++)  // TABS should be 8 spaces
+                        printf(" ");
+                }
+                else
+                    commandComplete(inp, len, &pt);
             }
             else if (c == 4)
                 exit(0);
+            else if (c == 2)
+            {
+                int len = strlen(inp);
+                if (autoComplete(inp, &commandCompleteCt, -1))
+                    commandComplete(inp, len, &pt);
+            }
+            else if (c == 14)
+            {
+                int len = strlen(inp);
+                if (autoComplete(inp, &commandCompleteCt, 1))
+                    commandComplete(inp, len, &pt);
+
+            }
             else if (c == 12)
             {
                 strcpy(inp, "clear");
@@ -102,6 +137,7 @@ char* input()
         }
         else
         {
+            commandCompleteCt = 0;
             inp[pt++] = c;
             printf("%c", c);
         }

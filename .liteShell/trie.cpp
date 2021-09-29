@@ -172,7 +172,7 @@ int main()
 	//insert(root, "helping");
 	//int comp = printAutoSuggestions(root, "hel");
 
-    ifstream fin("args.txt");
+    ifstream fin(".liteShell/args.txt");
 
     if (fin.eof())
     {
@@ -186,7 +186,7 @@ int main()
     while ((fin >> word))
         insert(root, word);
 
-    ofstream fout("return.txt");
+    ofstream fout(".liteShell/return.txt");
 
     fout << "\n\n";
 

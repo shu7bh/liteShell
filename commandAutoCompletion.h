@@ -1,6 +1,6 @@
 #ifndef COMMANDAUTOCOMPLETION_H
 #define COMMANDAUTOCOMPLETION_H
 
-void autoComplete(char* inp);
+int autoComplete(char* inp, int* ct, int addOrSub);
 
 #endif

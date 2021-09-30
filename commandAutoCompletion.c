@@ -1,72 +1,132 @@
 #include "commandAutoCompletion.h"
 #include "headers.h"
 #include "token.h"
+#include "homeDir.h"
 #include "makeChild.h"
 #include <dirent.h>
 
 char ogCommand[SIZE];
 
+int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand);
+char * strrstr(char*s1, char* s2);
+
 int autoComplete(char* command, int* ct, int addOrSub)
 {
+    if (!strlen(command))
+        return 0;
+
+    switch (command[strlen(command) - 1])
+    {
+        case ' ':
+        case '\t':
+            return 0;
+        default:
+            break;
+    }
+
+    char prefix[SIZE];
+    strcpy(prefix, command);
+
+    char inp[SIZE];
+    strcpy(inp, command);
+
+    char** argv = malloc(SIZE);
+    int argc, temp;
+
+    if (!tokenize(inp, argv, &argc, &temp))
+        return 0;
+
+    char curCommand[SIZE];
+    strcpy(curCommand, argv[argc]);
+
+    char* p = strrstr(prefix, curCommand);
+
+    if (p)
+        memset(p, 0, strlen(p));
+
+
     if (!*ct)
     {
-        char inp[SIZE];
-        strcpy(inp, command);
+        strcpy(ogCommand, curCommand);
+        char dir[SIZE];
 
-        if (!strlen(inp))
-            return 0;
+        if (argc)
+        {
+            char* a = strrchr(curCommand, '/');
+            if (a)
+            {
+                a[0] = 0;
+                strcpy(dir, curCommand);
+            }
+            else
+                strcpy(dir, ".");
+        }
+        else
+            strcpy(dir, "/usr/bin");
 
-        if (inp[strlen(inp) - 1] == ' ')
-            return 0;
-
-        char** argv = malloc(SIZE);
-        int argc, temp;
-
-        if (tokenize(inp, argv, &argc, &temp))
-            if (argc)
-                return 0;
-
-        char* dir = "/usr/bin";
         struct dirent *directory;
         DIR *d = opendir(dir);
 
         if (!d)
+            return 0;
+
+        char path[SIZE];
+        sprintf(path, "%s/%s", getHomeDir(), ".liteShell/args.txt");
+
+        FILE* fp = fopen(path, "w");
+
+        if (!fp)
         {
-            perror("open dir error");
+            perror("fp error");
             return 0;
         }
 
-        FILE* fp = fopen(".liteShell/args.txt", "w");
-
-        fprintf(fp, "%s\n", inp);
-        strcpy(ogCommand, inp);
+        fprintf(fp, "%s\n", ogCommand);
 
         while ((directory = readdir(d)))
-            fprintf(fp, "%s\n", directory->d_name);
+        {
+            fprintf(fp, "%s", directory->d_name);
+
+            char path[SIZE];
+            sprintf(path, "%s/%s", curCommand, directory->d_name);
+            DIR* checkDir = opendir(path);
+            if (checkDir)
+                fprintf(fp, "/");
+
+            fprintf(fp, "\n");
+        }
 
         fclose(fp);
 
         char* commandArg[2];
-        commandArg[0] = strdup("./.liteShell/trie");
+        sprintf(path, "%s/%s", getHomeDir(), ".liteShell/trie");
+        commandArg[0] = strdup(path);
         commandArg[1] = 0;
 
         makeChildFg(commandArg);
         free(commandArg[0]);
     }
 
-    FILE* fin = fopen(".liteShell/return.txt", "r");
+    memset(inp, 0, SIZE);
+    if (!nextArgument(inp, ct, addOrSub, ogCommand))
+        return 0;
+
+    sprintf(command, "%s%s", prefix, inp);
+
+    return 1;
+}
+
+int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
+{
+    char path[SIZE];
+    sprintf(path, "%s/%s", getHomeDir(), ".liteShell/return.txt");
+
+    FILE* fin = fopen(path, "r");
     if (!fin)
     {
         perror("fin error");
         return 0;
     }
-
-    int r;
-
-    fscanf(fin, "%d", &r);
-
-    if (!r)
-        return 0;
 
     char string[SIZE];
     int linect;
@@ -75,19 +135,21 @@ int autoComplete(char* command, int* ct, int addOrSub)
         fscanf(fin, "%s", string);
 
     fseek(fin, 0, SEEK_SET);
-    fscanf(fin, "%s", string);
+    *ct = (linect + *ct + addOrSub) % linect;
 
-    if (r == -1)
+    switch (linect)
     {
+    case 1: return 0;
+    case 2:
         fscanf(fin, "%s", string);
         sprintf(command, "%s ", string);
         return 1;
+
+    default: break;
     }
 
-    *ct = (linect + *ct + addOrSub) % linect;
-
     int i = 0;
-    for (i = 0; i < *ct; ++i)
+    for (; i < *ct; ++i)
         fscanf(fin, "%s", string);
 
     if (i)
@@ -97,4 +159,29 @@ int autoComplete(char* command, int* ct, int addOrSub)
 
     fclose(fin);
     return 1;
+}
+
+char* strrstr(char* s1, char* s2)
+{
+    char* ss1;
+    char* sss1;
+    char* sss2;
+
+    if(*(s2) == '\0')
+        return s1;
+
+    ss1 = s1 + strlen(s1);
+
+    while(ss1 != s1)
+    {
+        --ss1;
+
+        for(sss1 = ss1, sss2 = s2;;)
+            if(*(sss1++) != *(sss2++))
+                break;
+            else if (*sss2 == '\0')
+                return ss1;
+    }
+
+    return NULL;
 }

@@ -109,9 +109,15 @@ int printAutoSuggestions(TrieNode* root, string query, ofstream& fout)
     }
 
     std::size_t found = query.find_last_of("/");
-    string path = query.substr(0, found);
-    path += '/';
-    query = query.substr(found + 1);
+
+    string path;
+    if (found != std::string::npos)
+    {
+        path += query.substr(0, found) + '/';
+        query = query.substr(found + 1);
+    }
+    else
+        path = "";
 
 	int n = query.length();
 
@@ -157,7 +163,7 @@ void suggestionsRec(struct TrieNode* root, string currPrefix, ofstream& fout, st
 {
 	// found a string in Trie with the given prefix
 	if (root->isWordEnd)
-		fout << currPrefix << '\n';
+		fout << path + currPrefix << '\n';
 
 	// All children struct node pointers are NULL
 	if (isLastNode(root))

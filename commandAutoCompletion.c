@@ -96,7 +96,7 @@ int autoComplete(char* command, int* ct, int addOrSub)
             fprintf(fp, "%s", directory->d_name);
 
             char path[SIZE];
-            sprintf(path, "%s/%s", curCommand, directory->d_name);
+            sprintf(path, "%s/%s", dir, directory->d_name);
             DIR* checkDir = opendir(path);
             if (checkDir)
                 fprintf(fp, "/");
@@ -140,7 +140,7 @@ int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
     int linect;
 
     for (linect = 0; !feof(fin); ++linect)
-        fscanf(fin, "%s", string);
+        fgets(string, SIZE, fin);
 
     fseek(fin, 0, SEEK_SET);
     *ct = (linect + *ct + addOrSub) % linect;
@@ -154,7 +154,7 @@ int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
         if (isCommand)
             sprintf(command, "%s ", string);
         else
-            sprintf(command, "%s/", string);
+            sprintf(command, "%s", string);
         return 1;
 
     default: break;
@@ -162,7 +162,10 @@ int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
 
     int i = 0;
     for (; i < *ct; ++i)
-        fscanf(fin, "%s", string);
+        fgets(string, SIZE, fin);
+
+    if (string[strlen(string) - 1] == '\n')
+        string[strlen(string) - 1] = 0;
 
     if (i)
         strcpy(command, string);

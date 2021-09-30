@@ -10,6 +10,8 @@ char ogCommand[SIZE];
 int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand);
 char * strrstr(char*s1, char* s2);
 
+int isCommand = 1;
+
 int autoComplete(char* command, int* ct, int addOrSub)
 {
     if (!strlen(command))
@@ -44,7 +46,6 @@ int autoComplete(char* command, int* ct, int addOrSub)
     if (p)
         memset(p, 0, strlen(p));
 
-
     if (!*ct)
     {
         strcpy(ogCommand, curCommand);
@@ -59,10 +60,17 @@ int autoComplete(char* command, int* ct, int addOrSub)
                 strcpy(dir, curCommand);
             }
             else
+            {
                 strcpy(dir, ".");
+                DIR* d = opendir(curCommand);
+                if (d)
+                    strcat(ogCommand, "/");
+            }
+
+            isCommand = 0;
         }
         else
-            strcpy(dir, "/usr/bin");
+            strcpy(dir, "/usr/bin"), isCommand = 1;
 
         struct dirent *directory;
         DIR *d = opendir(dir);
@@ -142,7 +150,11 @@ int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
     case 1: return 0;
     case 2:
         fscanf(fin, "%s", string);
-        sprintf(command, "%s ", string);
+
+        if (isCommand)
+            sprintf(command, "%s ", string);
+        else
+            sprintf(command, "%s/", string);
         return 1;
 
     default: break;

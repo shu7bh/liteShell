@@ -2,7 +2,13 @@
 *.d
 
 # History file
-history.txt
+.liteShell/history.txt
+
+# return file
+.liteShell/return.txt
+
+# argument file
+.liteShell/args.txt
 
 # Object files
 *.o

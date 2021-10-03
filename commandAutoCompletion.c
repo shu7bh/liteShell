@@ -60,12 +60,7 @@ int autoComplete(char* command, int* ct, int addOrSub)
                 strcpy(dir, curCommand);
             }
             else
-            {
                 strcpy(dir, ".");
-                DIR* d = opendir(curCommand);
-                if (d)
-                    strcat(ogCommand, "/");
-            }
 
             isCommand = 0;
         }

@@ -1,6 +1,6 @@
 #include "Features/prompt.h"
 #include "input.h"
-#include "runCommand.h"
+#include "Helper/pipe.h"
 #include "headers.h"
 #include "Helper/linkedList.h"
 #include "Helper/colors.h"
@@ -25,7 +25,7 @@ int main()
 
         addCommand(inp);
         for (token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
-            runCommand(token);
+            pipeIt(token);
     }
     return 0;
 }

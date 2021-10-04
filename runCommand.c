@@ -17,15 +17,14 @@ void runCommand(char* inputBuffer)
     if (!tokenize(inputBuffer, argv, argc, bgprocess))
         return;
 
+    printf("%d\n%d\n", STDIN_FILENO, STDOUT_FILENO);
     int stdoutCopy = dup(STDOUT_FILENO);
     int stdinCopy = dup(STDIN_FILENO);
-    int stderrCopy = dup(STDERR_FILENO);
 
     if (!inputOutputRedirection(argv, argc))
     {
         dup2(stdoutCopy, STDOUT_FILENO);
         dup2(stdinCopy, STDIN_FILENO);
-        dup2(stderrCopy, STDERR_FILENO);
         return;
     }
 
@@ -46,5 +45,4 @@ void runCommand(char* inputBuffer)
 
     dup2(stdoutCopy, STDOUT_FILENO);
     dup2(stdinCopy, STDIN_FILENO);
-    dup2(stderrCopy, STDERR_FILENO);
 }

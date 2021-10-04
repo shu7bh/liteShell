@@ -1,7 +1,7 @@
 #include "history.h"
-#include "headers.h"
-#include "homeDir.h"
-#include "stringToNum.h"
+#include "../headers.h"
+#include "../Helper/homeDir.h"
+#include "../Helper/stringToNum.h"
 
 char his[21][SIZE] = {0};
 int start;

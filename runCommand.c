@@ -1,8 +1,8 @@
 #include "runCommand.h"
 #include "headers.h"
-#include "makeChild.h"
-#include "token.h"
-#include "callWriitenFunctions.h"
+#include "Features/makeChild.h"
+#include "Helper/token.h"
+#include "Helper/callWriitenFunctions.h"
 #include <string.h>
 
 void runCommand(char* inputBuffer)

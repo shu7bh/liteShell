@@ -1,5 +1,5 @@
 #include "processTermination.h"
-#include "linkedList.h"
+#include "../Helper/linkedList.h"
 #include "prompt.h"
 #include <unistd.h>
 #include <sys/wait.h>

@@ -1,5 +1,5 @@
 #include "cwd.h"
-#include "headers.h"
+#include "../headers.h"
 #include <unistd.h>
 
 const char* getCWD()

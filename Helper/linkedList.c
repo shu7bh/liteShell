@@ -1,5 +1,5 @@
 #include "linkedList.h"
-#include "headers.h"
+#include "../headers.h"
 
 Node* head;
 Node* createProcess();

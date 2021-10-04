@@ -1,5 +1,5 @@
 #include "token.h"
-#include "headers.h"
+#include "../headers.h"
 
 int tokenize(char* inputBuffer, char** argv, int* argc, int* bgprocess)
 {

@@ -1,8 +1,8 @@
 #include "pinfo.h"
-#include "headers.h"
-#include "stringToNum.h"
-#include "homeDir.h"
-#include "token.h"
+#include "../headers.h"
+#include "../Helper/stringToNum.h"
+#include "../Helper/homeDir.h"
+#include "../Helper/token.h"
 
 void pinfo(int argc, char **argv)
 {

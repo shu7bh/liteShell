@@ -1,6 +1,6 @@
 #include "makeChild.h"
-#include "headers.h"
-#include "linkedList.h"
+#include "../headers.h"
+#include "../Helper/linkedList.h"
 #include <stdlib.h>
 
 void makeChildFg(char** argv)

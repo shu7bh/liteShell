@@ -1,5 +1,5 @@
 #include "stringToNum.h"
-#include "headers.h"
+#include "../headers.h"
 
 int stringToNum(char* str)
 {

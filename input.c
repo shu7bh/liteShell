@@ -1,8 +1,8 @@
 #include "input.h"
 #include "headers.h"
-#include "history.h"
-#include "prompt.h"
-#include "commandAutoCompletion.h"
+#include "Features/history.h"
+#include "Features/prompt.h"
+#include "Features/commandAutoCompletion.h"
 #include <termios.h>
 #include <stdlib.h>
 #include <ctype.h>

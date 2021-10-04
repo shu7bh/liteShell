@@ -1,7 +1,7 @@
 #include "ls.h"
-#include "homeDir.h"
-#include "headers.h"
-#include "colors.h"
+#include "../Helper/homeDir.h"
+#include "../headers.h"
+#include "../Helper/colors.h"
 #include <dirent.h>
 #include <stdlib.h>
 #include <sys/types.h>

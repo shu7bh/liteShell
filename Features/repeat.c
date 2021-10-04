@@ -1,8 +1,8 @@
 #include "repeat.h"
-#include "headers.h"
+#include "../headers.h"
 #include "makeChild.h"
-#include "stringToNum.h"
-#include "callWriitenFunctions.h"
+#include "../Helper/stringToNum.h"
+#include "../Helper/callWriitenFunctions.h"
 #include <stdlib.h>
 
 void repeat(int argc, char** argv)

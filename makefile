@@ -1,2 +1,2 @@
 main:
-	gcc -g *.c -o liteShell
+	gcc -g *.c Helper/* Features/* -o liteShell

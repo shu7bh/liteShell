@@ -1,14 +1,13 @@
-#include "prompt.h"
+#include "Features/prompt.h"
 #include "input.h"
 #include "runCommand.h"
 #include "headers.h"
-#include "linkedList.h"
-#include "colors.h"
-#include "processTermination.h"
+#include "Helper/linkedList.h"
+#include "Helper/colors.h"
+#include "Features/processTermination.h"
 #include <signal.h>
 #include <stdlib.h>
-#include "history.h"
-
+#include "Features/history.h"
 
 int main()
 {

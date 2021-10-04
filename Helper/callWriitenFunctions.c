@@ -1,12 +1,12 @@
 #include "callWriitenFunctions.h"
-#include "headers.h"
-#include "cd.h"
-#include "ls.h"
+#include "../headers.h"
+#include "../Features/cd.h"
+#include "../Features/ls.h"
 #include "cwd.h"
-#include "pinfo.h"
-#include "echo.h"
-#include "repeat.h"
-#include "history.h"
+#include "../Features/pinfo.h"
+#include "../Features/echo.h"
+#include "../Features/repeat.h"
+#include "../Features/history.h"
 #include <stdlib.h>
 
 int callWrittenFunctions(char** argv, int argc)

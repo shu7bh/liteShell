@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include "history.h"
 
-
 int main()
 {
     makeProcessLinkedList();

@@ -5,7 +5,6 @@
 
 void makeChildFg(char** argv)
 {
-
     pid_t pid, wpid;
     int status;
 
@@ -26,7 +25,6 @@ void makeChildFg(char** argv)
 
 void makeChildBg(char** argv)
 {
-
     pid_t pid, wpid;
     int status;
 

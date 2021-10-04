@@ -5,8 +5,6 @@
 #include "callWriitenFunctions.h"
 #include <string.h>
 
-int callWrittenFunctions(char**, int);
-
 void runCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);

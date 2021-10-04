@@ -1,6 +1,6 @@
 # liteShell
 
-It is a linux shell with basic features. It supports most funcitonalities including multiple commands execution and running background and foreground processes.
+It is a linux shell with basic features. It supports most funcitonalities including multiple commands execution and running background and foreground processes. Command and directory autocompletion is also supported.
 
 ## Running
 
@@ -19,6 +19,7 @@ make
 - It accounts for tabs and spaces.
 - Accessing history through up and down arrow key
 - Different colours for file and directories
+- Autocompletion: It shows the possible options. These options may not always the possible to run. To invoke it, you have to type the first few letters of the command and then press `tab`. As soon as this is pressed, it finds the possible completion options which you can use. To go to the next possible option, you can either press `tab` or `^n`. If you have gone over all the possible commands, it will circulate from the beginning. On the other hand, if you want to go back, you have to use `^b`.
 
 ## Commands
 
@@ -101,7 +102,6 @@ repeat n command args
 history
 history 15
 ```
-
 ## Exit
 
 If you want to exit the shell, type exit

@@ -19,20 +19,20 @@ void addCommand(char* command)
             return;
         else if (his[end % 21])
         {
-            strcpy(his[end % 21], strdup(command));
+            strcpy(his[end % 21], command);
             ++end;
             if (start % 21 == end % 21)
                 ++start;
         }
         else
         {
-            strcpy(his[end % 21], strdup(command));
+            strcpy(his[end % 21], command);
             ++end;
             if (start % 21 == end % 21)
                 ++start;
         }
     else
-        strcpy(his[end++], strdup(command));
+        strcpy(his[end++], command);
 
     writeHistory();
 }
@@ -55,7 +55,7 @@ void loadHistory()
         while (end < 21 && (read = getline(&string, &size, fp) != -1))
         {
             string[strlen(string) - 1] = 0;
-            strcpy(his[end++], strdup(string));
+            strcpy(his[end++], string);
         }
         fclose(fp);
     }

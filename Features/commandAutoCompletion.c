@@ -117,7 +117,6 @@ int autoComplete(char* command, int* ct, int addOrSub)
         closedir(d);
         makeChildFg(commandArg);
         free(commandArg[0]);
-        free(d);
     }
 
     memset(inp, 0, SIZE);

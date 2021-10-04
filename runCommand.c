@@ -3,7 +3,9 @@
 #include "Features/makeChild.h"
 #include "Helper/token.h"
 #include "Helper/callWriitenFunctions.h"
+#include "Helper/inputOutputRedirection.h"
 #include <string.h>
+#include <fcntl.h>
 
 void runCommand(char* inputBuffer)
 {
@@ -15,6 +17,17 @@ void runCommand(char* inputBuffer)
     if (!tokenize(inputBuffer, argv, argc, bgprocess))
         return;
 
+    int stdoutCopy = dup(STDOUT_FILENO);
+    int stdinCopy = dup(STDIN_FILENO);
+    int stderrCopy = dup(STDERR_FILENO);
+
+    if (!inputOutputRedirection(argv, argc))
+    {
+        dup2(stdoutCopy, STDOUT_FILENO);
+        dup2(stdinCopy, STDIN_FILENO);
+        dup2(stderrCopy, STDERR_FILENO);
+        return;
+    }
 
     if (!callWrittenFunctions(argv, *argc))
     {
@@ -30,4 +43,8 @@ void runCommand(char* inputBuffer)
     free(argc);
     free(argv);
     free(bgprocess);
+
+    dup2(stdoutCopy, STDOUT_FILENO);
+    dup2(stdinCopy, STDIN_FILENO);
+    dup2(stderrCopy, STDERR_FILENO);
 }

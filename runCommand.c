@@ -40,8 +40,12 @@ void runCommand(char* inputBuffer)
 
     free(temp);
     free(argc);
-    free(argv);
     free(bgprocess);
+
+    for (int i = 0; i <= *argc; ++i)
+        free(argv[i]);
+
+    free(argv);
 
     dup2(stdoutCopy, STDOUT_FILENO);
     dup2(stdinCopy, STDIN_FILENO);

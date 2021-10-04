@@ -41,6 +41,11 @@ int autoComplete(char* command, int* ct, int addOrSub)
     char curCommand[SIZE];
     strcpy(curCommand, argv[argc]);
 
+    for (int i = 0; i <= argc; ++i)
+        free(argv[i]);
+
+    free(argv);
+
     char* p = strrstr(prefix, curCommand);
 
     if (p)
@@ -94,7 +99,10 @@ int autoComplete(char* command, int* ct, int addOrSub)
             sprintf(path, "%s/%s", dir, directory->d_name);
             DIR* checkDir = opendir(path);
             if (checkDir)
+            {
                 fprintf(fp, "/");
+                free(checkDir);
+            }
 
             fprintf(fp, "\n");
         }
@@ -106,8 +114,10 @@ int autoComplete(char* command, int* ct, int addOrSub)
         commandArg[0] = strdup(path);
         commandArg[1] = 0;
 
+        closedir(d);
         makeChildFg(commandArg);
         free(commandArg[0]);
+        free(d);
     }
 
     memset(inp, 0, SIZE);

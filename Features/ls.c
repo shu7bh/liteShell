@@ -58,6 +58,7 @@ int ls(int argc, char** argv)
                 ++flag;
                 continue;
             }
+        free(d);
     }
 
     for (int i = 0; i < dirCt; ++i)
@@ -68,6 +69,8 @@ int ls(int argc, char** argv)
         if (!d)
             if (access(dirs[i], F_OK) == 0)
                 SearchDir(a_flag, l_flag, dirs[i], dirCt), ++flag;
+
+        free(d);
     }
 
     if (flag)
@@ -79,7 +82,10 @@ int ls(int argc, char** argv)
         DIR *d = opendir(dirs[i]);
 
         if (d)
+        {
             SearchDir(a_flag, l_flag, dirs[i], dirCt);
+            free(d);
+        }
     }
 
     return 0;
@@ -90,11 +96,7 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
     struct dirent *directory;
     DIR *d = opendir(dir);
 
-    int file_flag = 0;
-    if (!d)
-        file_flag = 1;
-
-    if (!file_flag)
+    if (d)
     {
         struct stat statInfo;
         lstat(dir, &statInfo);
@@ -114,6 +116,7 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
         if (l_flag)
             printf("total %u\n", block);
 
+        free(d);
         d = opendir(dir);
         while ((directory = readdir(d)) != NULL)
             if (!l_flag)
@@ -141,6 +144,7 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
         if (!l_flag)
             printf("\n");
         closedir(d);
+        free(d);
     }
     else if (l_flag)
         printStats(dir, dir);
@@ -152,6 +156,8 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
     }
     if (dirCt > 1 && !l_flag)
         printf("\n");
+
+    free(d);
 }
 
 void colors(const char* fullName)

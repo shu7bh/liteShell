@@ -26,6 +26,7 @@ int main()
         addCommand(inp);
         for (token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
             pipeIt(token);
+        free(inp);
     }
     return 0;
 }

@@ -2,11 +2,12 @@
 #include "../headers.h"
 #include "../Features/cd.h"
 #include "../Features/ls.h"
-#include "cwd.h"
 #include "../Features/pinfo.h"
 #include "../Features/echo.h"
 #include "../Features/repeat.h"
 #include "../Features/history.h"
+#include "../Features/jobs.h"
+#include "cwd.h"
 #include <stdlib.h>
 
 int callWrittenFunctions(char** argv, int argc)
@@ -30,6 +31,8 @@ int callWrittenFunctions(char** argv, int argc)
         pinfo(argc, argv);
     else if (!strcmp(argv[0], "history"))
         printCommand(argc, argv);
+    else if (!strcmp(argv[0], "jobs"))
+        jobs(argv, argc);
     else
         present = 0;
     return present;

@@ -46,7 +46,7 @@ void makeChildBg(char** argv)
 
     else // Parent process
     {
-        addProcess(argv[0], pid);
+        addProcess(argv[0], argv, pid);
         printf("%u\n", pid);
     }
 }

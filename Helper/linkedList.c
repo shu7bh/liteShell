@@ -3,20 +3,40 @@
 
 Node* head;
 Node* createProcess();
+int num = 0;
 
 void makeProcessLinkedList()
 {
     head = createProcess();
 }
 
-void addProcess(char* name, int id)
+void addProcess(char* name, char** command, int id)
 {
     Node* node = createProcess();
 
-    strcpy(node->name, name);
-    node->id = id;
-    node->next = head->next;
+    char str[SIZE] = {0};
 
+    for (int i = 0; command[i]; ++i)
+        strcat(str, command[i]), strcat(str, " ");
+
+    strcpy(node->name, name);
+    strcpy(node->command, str);
+    node->id = id;
+    node->num = ++num;
+
+    Node* temp = head;
+
+    while (temp->next)
+        if (strcmp(temp->next->name, name) > 0 || (!strcmp(temp->next->name, name) && temp->next->id < id))
+        {
+            node->next = temp->next;
+            temp->next = node;
+            break;
+        }
+        else
+            temp = temp->next;
+
+    node->next = head->next;
     head->next = node;
 }
 
@@ -43,9 +63,15 @@ Node* createProcess()
 {
     Node* node = malloc(sizeof(Node));
 
-    node->name[0] = 0;
+    memset(node->name, 0, SIZE);
+    memset(node->command, 0, SIZE);
     node->id = 0;
     node->next = 0;
 
     return node;
+}
+
+Node* getHead()
+{
+    return head;
 }

@@ -7,6 +7,8 @@
 #include "../Features/repeat.h"
 #include "../Features/history.h"
 #include "../Features/jobs.h"
+#include "../Features/sigs.h"
+#include "../Features/fg.h"
 #include "cwd.h"
 #include <stdlib.h>
 
@@ -33,8 +35,11 @@ int callWrittenFunctions(char** argv, int argc)
         printCommand(argc, argv);
     else if (!strcmp(argv[0], "jobs"))
         jobs(argv, argc);
+    else if (!strcmp(argv[0], "sig"))
+        sig(argv, argc);
+    else if (!strcmp(argv[0], "fg"))
+        fg(argv, argc);
     else
         present = 0;
     return present;
 }
-

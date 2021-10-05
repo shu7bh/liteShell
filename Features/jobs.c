@@ -38,13 +38,12 @@ void jobs(char** argv, int argc)
             return;
         }
 
-        char str1[SIZE], str2[SIZE];
+        char str[SIZE];
 
-        fscanf(fp, "%s", str1);
-        for (int i = 0; i < 6; ++i)
-            fscanf(fp, "%s", str2);
+        for (int i = 0; i < 3; ++i)
+            fscanf(fp, "%s", str);
 
-        char* value = strcmp(str1, str2)? "Stopped" : "Running";
+        char* value = !strcmp(str, "T")? "Stopped" : "Running";
 
         if (!flag || (flag == 1 && !strcmp(value, "Running")) || (flag == -1 && !strcmp(value, "Stopped")))
             printf("[%d] %s %s [%d]\n", node->num, value, node->command, node->id);

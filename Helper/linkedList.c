@@ -75,3 +75,16 @@ Node* getHead()
 {
     return head;
 }
+
+Node* getNodeNum(int num)
+{
+    Node* node = head->next;
+
+    while (node)
+        if (node->num == num)
+            return node;
+        else
+            node = node->next;
+
+    return 0;
+}

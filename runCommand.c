@@ -11,27 +11,25 @@ void runCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);
     char** argv = malloc(SIZE);
+    int argc = 0;
+    int bgprocess;
 
-    int* argc = malloc(sizeof(int));
-    int* bgprocess = malloc(sizeof(int));
-    if (!tokenize(inputBuffer, argv, argc, bgprocess))
+    if (!tokenize(inputBuffer, argv, &argc, &bgprocess))
         return;
 
     int stdoutCopy = dup(STDOUT_FILENO);
     int stdinCopy = dup(STDIN_FILENO);
-    int stderrCopy = dup(STDERR_FILENO);
 
-    if (!inputOutputRedirection(argv, argc))
+    if (!inputOutputRedirection(argv, &argc))
     {
         dup2(stdoutCopy, STDOUT_FILENO);
         dup2(stdinCopy, STDIN_FILENO);
-        dup2(stderrCopy, STDERR_FILENO);
         return;
     }
 
-    if (!callWrittenFunctions(argv, *argc))
+    if (!callWrittenFunctions(argv, argc))
     {
-        if (*bgprocess)
+        if (bgprocess)
             makeChildBg(argv);
         else
             makeChildFg(argv);
@@ -39,17 +37,22 @@ void runCommand(char* inputBuffer)
 
     strcpy(inputBuffer, temp);
 
-    free(temp);
-    free(argc);
-    free(bgprocess);
 
-    for (int i = 0; i <= *argc; ++i)
+    for (int i = 0; i <= argc; ++i)
         free(argv[i]);
 
+    free(temp);
     free(argv);
 
-    dup2(stdoutCopy, STDOUT_FILENO);
-    dup2(stdinCopy, STDIN_FILENO);
-    dup2(stderrCopy, STDERR_FILENO);
+    if (dup2(stdoutCopy, STDOUT_FILENO) < 0 || dup2(stdinCopy, STDIN_FILENO) < 0)
+    {
+        perror("Dup2 error");
+        return;
+    }
 
+    /*if (stdinCopy != STDIN_FILENO)*/
+        /*close(stdinCopy);*/
+
+    if (stdoutCopy != STDOUT_FILENO)
+        close(stdoutCopy);
 }

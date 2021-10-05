@@ -8,7 +8,7 @@
 void handleProcessTermination(int sig)
 {
     int flag;
-    pid_t pid = waitpid(-1, &flag, WNOHANG | WUNTRACED );
+    pid_t pid = waitpid(-1, &flag, WNOHANG);
     if(pid > 0)
     {
         char name[100];

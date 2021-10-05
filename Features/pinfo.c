@@ -8,7 +8,7 @@ void pinfo(int argc, char **argv)
 {
     int pid = argc ? stringToNum(argv[1]) : getpid();
 
-    char filepath[512];
+    char filepath[SIZE];
     sprintf(filepath, "/proc/%d/stat", pid);
 
     FILE* fp;

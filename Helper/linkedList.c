@@ -18,6 +18,7 @@ void addProcess(char* name, char** command, int id)
 
     for (int i = 0; command[i]; ++i)
         strcat(str, command[i]), strcat(str, " ");
+    str[strlen(str) - 1] = 0;
 
     strcpy(node->name, name);
     strcpy(node->command, str);

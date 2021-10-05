@@ -21,17 +21,17 @@ void makeChildFg(char** argv)
 
     else // Parent process
     {
-        fg.pid = getpid();
-        strcpy(fg.command, argv[0]);
-        for (int i = 1; argv[i]; ++i)
+        fgDetails.pid = getpid();
+        strcpy(fgDetails.command, argv[0]);
+        for (int i = 0; argv[i]; ++i)
         {
-            strcat(fg.args, argv[i]);
-            strcat(fg.args, " ");
+            strcat(fgDetails.args, argv[i]);
+            strcat(fgDetails.args, " ");
         }
         wpid = waitpid(pid, &status, WUNTRACED);
-        fg.pid = -1;
-        memset(fg.command, 0, SIZE);
-        memset(fg.args, 0, SIZE);
+        fgDetails.pid = -1;
+        memset(fgDetails.command, 0, SIZE);
+        memset(fgDetails.args, 0, SIZE);
     }
 }
 

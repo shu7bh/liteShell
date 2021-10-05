@@ -21,6 +21,10 @@ void fg(char** argv, int argc)
     }
 
     char temp[SIZE];
+    fgDetails.pid = node->id;
+    strcpy(fgDetails.args, node->command);
+    strcpy(fgDetails.command, node->name);
+
     searchAndDeleteProcess(temp, node->id);
 
     int mainPID = getpgrp();
@@ -31,9 +35,14 @@ void fg(char** argv, int argc)
     tcsetpgrp(STDIN_FILENO, node->id);
     kill(node->id, SIGCONT);
     int status;
-    waitpid(node->id, &status, WUNTRACED);
+    waitpid(node->id, &status, 0);
+    printf("%d", node->id);
 
     tcsetpgrp(STDIN_FILENO, mainPID);
+
+    fgDetails.pid = -1;
+    memset(fgDetails.command, 0, SIZE);
+    memset(fgDetails.args, 0, SIZE);
 
     signal(SIGTTIN, SIG_DFL);
     signal(SIGTTOU, SIG_DFL);

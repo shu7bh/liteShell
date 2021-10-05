@@ -9,45 +9,46 @@
 #include <stdlib.h>
 #include "Features/history.h"
 
-Fg fg;
+Fg fgDetails;
 
 void ctrlc(int sig)
 {
-    if (fg.pid != -1)
+    if (fgDetails.pid != -1)
     {
-        kill(fg.pid, SIGINT);
-        fg.pid = -1;
-        memset(fg.command, 0, SIZE);
-        memset(fg.args, 0, SIZE);
+        kill(fgDetails.pid, SIGINT);
+        fgDetails.pid = -1;
+        memset(fgDetails.command, 0, SIZE);
+        memset(fgDetails.args, 0, SIZE);
 
         printf("\r");
     }
-    /*else*/
-    /*{*/
-        /*printf("\n");*/
-        /*prompt();*/
-    /*}*/
 }
 
 void ctrlz(int sig)
 {
-	signal(SIGTSTP, ctrlz);
-    if (fg.pid != -1)
+    /*printf("%d %s %s\n", fgDetails.pid, fgDetails.command, fgDetails.args);*/
+    if (fgDetails.pid != -1)
     {
-        printf("%d", fg.pid);
-        kill(fg.pid, SIGTSTP);
-        addCommand(fg.command);
-        fg.pid = -1;
-        memset(fg.command, 0, SIZE);
-        memset(fg.args, 0, SIZE);
+        /*printf("%d", fgDetails.pid);*/
+        kill(fgDetails.pid, SIGTSTP);
+        char* args[2];
+        args[0] = strdup(fgDetails.args);
+        args[1] = 0;
+
+        addProcess(fgDetails.command, args, fgDetails.pid);
+        fgDetails.pid = -1;
+
+        free(args[0]);
+        memset(fgDetails.command, 0, SIZE);
+        memset(fgDetails.args, 0, SIZE);
     }
 }
 
 int main()
 {
-    fg.pid = -1;
-    memset(fg.command, 0, SIZE);
-    memset(fg.args, 0, SIZE);
+    fgDetails.pid = -1;
+    memset(fgDetails.command, 0, SIZE);
+    memset(fgDetails.args, 0, SIZE);
 
     makeProcessLinkedList();
     setPromptVar();

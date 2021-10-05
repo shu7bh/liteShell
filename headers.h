@@ -17,6 +17,6 @@ typedef struct Fg
     char args[SIZE];
 } Fg;
 
-extern Fg fg;
+extern Fg fgDetails;
 
 #endif

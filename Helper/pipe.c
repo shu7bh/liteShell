@@ -9,7 +9,6 @@ void pipeIt(char* command)
 
     int stdoutCopy = dup(STDOUT_FILENO);
     int stdinCopy = dup(STDIN_FILENO);
-    int storeFd = stdinCopy;
 
     char* argv[SIZE];
 
@@ -27,37 +26,38 @@ void pipeIt(char* command)
             return;
         }
 
-        if (dup2(storeFd, STDIN_FILENO) < 0 || dup2(fd[1], STDOUT_FILENO) < 0)
+        if (dup2(fd[1], STDOUT_FILENO) < 0)
         {
             perror("dup2 error");
             return;
         }
 
-        if (storeFd != STDIN_FILENO)
-            close(storeFd);
-
         if (fd[1] != STDOUT_FILENO)
             close(fd[1]);
 
-        storeFd = fd[0];
         runCommand(argv[j]);
+
+        if (dup2(fd[0], STDIN_FILENO) < 0)
+        {
+            perror("dup2 error");
+            return;
+        }
+
+        if (fd[0] != STDIN_FILENO)
+            close(fd[0]);
     }
 
-    if (dup2(storeFd, STDIN_FILENO) < 0 || dup2(stdoutCopy, STDOUT_FILENO) < 0)
+    if (dup2(stdoutCopy, STDOUT_FILENO) < 0)
     {
         perror("dup2 error");
         return;
     }
 
-    if (storeFd != STDIN_FILENO)
-        close(storeFd);
-
-    if (stdoutCopy != STDOUT_FILENO)
-        close(stdoutCopy);
-
     runCommand(argv[i - 1]);
+
+    dup2(stdinCopy, STDIN_FILENO);
     free(str);
 
-    /*dup2(stdinCopy, STDIN_FILENO);*/
-    /*close(stdinCopy);*/
+    close(stdinCopy);
+    close(stdoutCopy);
 }

@@ -11,9 +11,15 @@ void pipeIt(char* command)
     int stdinCopy = dup(STDIN_FILENO);
     int storeFd = stdinCopy;
 
+    char* argv[SIZE];
+
+    int i = 0;
+    for (char* token = strtok_r(command, "|", &safePtr); token; token = strtok_r(NULL, "|", &safePtr))
+        argv[i++] = strdup(token);
+
     int fd[2];
 
-    for (char* token = strtok_r(command, "|", &safePtr); token; token = strtok_r(NULL, "|", &safePtr))
+    for (int j = 0; j < i - 1; ++j)
     {
         if (pipe(fd) == -1)
         {
@@ -27,21 +33,31 @@ void pipeIt(char* command)
             return;
         }
 
-        printf("%d\n%d\n", STDIN_FILENO, STDOUT_FILENO);
+        if (storeFd != STDIN_FILENO)
+            close(storeFd);
 
-        close(storeFd);
-        close(fd[1]);
+        if (fd[1] != STDOUT_FILENO)
+            close(fd[1]);
 
         storeFd = fd[0];
-        runCommand(token);
+        runCommand(argv[j]);
     }
 
-    char string[SIZE];
+    if (dup2(storeFd, STDIN_FILENO) < 0 || dup2(stdoutCopy, STDOUT_FILENO) < 0)
+    {
+        perror("dup2 error");
+        return;
+    }
 
-    dup2(stdinCopy, STDIN_FILENO);
-    dup2(stdoutCopy, STDOUT_FILENO);
+    if (storeFd != STDIN_FILENO)
+        close(storeFd);
 
-    while (read(storeFd, string, SIZE))
-        printf("%s", string);
+    if (stdoutCopy != STDOUT_FILENO)
+        close(stdoutCopy);
+
+    runCommand(argv[i - 1]);
     free(str);
+
+    /*dup2(stdinCopy, STDIN_FILENO);*/
+    /*close(stdinCopy);*/
 }

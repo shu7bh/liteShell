@@ -10,4 +10,13 @@
 
 #define SIZE 4096
 
+typedef struct Fg
+{
+    int pid;
+    char command[SIZE];
+    char args[SIZE];
+} Fg;
+
+extern Fg fg;
+
 #endif

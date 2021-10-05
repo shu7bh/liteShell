@@ -20,7 +20,19 @@ void makeChildFg(char** argv)
         perror("Error forking");
 
     else // Parent process
+    {
+        fg.pid = getpid();
+        strcpy(fg.command, argv[0]);
+        for (int i = 1; argv[i]; ++i)
+        {
+            strcat(fg.args, argv[i]);
+            strcat(fg.args, " ");
+        }
         wpid = waitpid(pid, &status, WUNTRACED);
+        fg.pid = -1;
+        memset(fg.command, 0, SIZE);
+        memset(fg.args, 0, SIZE);
+    }
 }
 
 void makeChildBg(char** argv)

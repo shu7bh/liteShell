@@ -20,7 +20,7 @@ void pinfo(int argc, char **argv)
         return;
     }
 
-    char statString[35][60]; // As there can be at most 52 tokens
+    char statString[35][60];
 
     for (int i = 0; i < 30; ++i)
         fscanf(fp, "%s", statString[i]);

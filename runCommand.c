@@ -46,7 +46,7 @@ void runCommand(char* inputBuffer)
 
     if (dup2(stdoutCopy, STDOUT_FILENO) < 0 || dup2(stdinCopy, STDIN_FILENO) < 0)
     {
-        perror("Dup2 error");
+        logError("Dup2 error");
         return;
     }
 

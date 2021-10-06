@@ -5,59 +5,47 @@
 
 void makeChildFg(char** argv)
 {
-    pid_t pid, wpid;
-    int status;
+    pid_t pid = fork();
 
-    pid = fork();
-    if (pid == 0) // Child process
+    switch(pid)
     {
-        if (execvp(argv[0], argv))
-            perror("Command not found");
+    case 0:
+        if (execvp(argv[0], argv) == -1)
+            logError("Command not found");
         exit(0);
-    }
 
-    else if (pid < 0) // Error forking
-        perror("Error forking");
+    case -1:
+        logError("Error forking");
+        return;
 
-    else // Parent process
-    {
-        fgDetails.pid = pid;
-        strcpy(fgDetails.name, argv[0]);
-        for (int i = 0; argv[i]; ++i)
-        {
-            strcat(fgDetails.command, argv[i]);
-            strcat(fgDetails.command, " ");
-        }
-        wpid = waitpid(pid, &status, WUNTRACED);
-        fgDetails.pid = -1;
-        memset(fgDetails.name, 0, SIZE);
-        memset(fgDetails.command, 0, SIZE);
+    default:
+        addFgAr(pid, argv);
+        int status;
+        pid_t wpid = waitpid(pid, &status, WUNTRACED);
+        clearFg();
     }
 }
 
 void makeChildBg(char** argv)
 {
-    pid_t pid, wpid;
-    int status;
+    pid_t pid = fork();
 
-    pid = fork();
-
-    if (pid == 0) // Child process
+    switch(pid)
     {
+    case 0:
         if (execvp(argv[0], argv) == -1)
         {
             char temp[100];
-            perror("Command not found");
+            logError("Command not found");
         }
 
         exit(0);
-    }
 
-    else if (pid < 0) // Error forking
-        perror("Error forking");
+    case -1:
+        logError("Error forking");
+        return;
 
-    else // Parent process
-    {
+    default:
         addProcess(argv[0], argv, pid);
         printf("%u\n", pid);
     }

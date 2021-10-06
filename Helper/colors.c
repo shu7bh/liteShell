@@ -32,5 +32,10 @@ void cPrompt()
 
 void errorRed()
 {
-    fprintf(stderr, "\033[0;91m");
+    fprintf(stderr, "\033[1;91m");
+}
+
+void errorReset()
+{
+    fprintf(stderr, "\033[0;97m");
 }

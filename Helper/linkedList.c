@@ -41,17 +41,6 @@ void addProcess(char* name, char** command, int id)
     temp->next = node;
 }
 
-void print()
-{
-    Node* node = head->next;
-
-    while (node)
-    {
-        printf("%d %s\n", node->id, node->command);
-        node = node->next;
-    }
-}
-
 int searchAndDeleteProcess(char* name, int id)
 {
     Node* node = head;

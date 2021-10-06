@@ -9,7 +9,7 @@ void repeat(int argc, char** argv)
 {
     if (argc == 1)
     {
-        printf("repeat error: No number provided\n");
+        logStdError("repeat error: No number provided");
         return;
     }
 

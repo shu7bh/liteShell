@@ -3,9 +3,10 @@
 #include "../Helper/homeDir.h"
 #include "../Helper/stringToNum.h"
 
-char his[21][SIZE] = {0};
-int start;
-int end;
+const int hNum = 10001;
+char his[10001][SIZE] = {0};
+int start = 0;
+int end = 0;
 
 void loadHistory();
 void writeHistory();
@@ -15,20 +16,20 @@ void addCommand(char* command)
     loadHistory();
 
     if (end)
-        if (!strcmp(his[(end - 1) % 21], command))
+        if (!strcmp(his[(end - 1) % hNum], command))
             return;
-        else if (his[end % 21])
+        else if (his[end % hNum])
         {
-            strcpy(his[end % 21], command);
+            strcpy(his[end % hNum], command);
             ++end;
-            if (start % 21 == end % 21)
+            if (start % hNum == end % hNum)
                 ++start;
         }
         else
         {
-            strcpy(his[end % 21], command);
+            strcpy(his[end % hNum], command);
             ++end;
-            if (start % 21 == end % 21)
+            if (start % hNum == end % hNum)
                 ++start;
         }
     else
@@ -43,22 +44,20 @@ void loadHistory()
     sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "r");
 
-    start = 0;
-    end = 0;
+    if (!fp)
+        return;
 
     size_t size = SIZE;
     char* string = malloc(size);
+    ssize_t read;
 
-    if (fp)
+    while (end < hNum && (read = getline(&string, &size, fp) != -1))
     {
-        ssize_t read;
-        while (end < 21 && (read = getline(&string, &size, fp) != -1))
-        {
-            string[strlen(string) - 1] = 0;
-            strcpy(his[end++], string);
-        }
-        fclose(fp);
+        string[strlen(string) - 1] = 0;
+        strcpy(his[end++], string);
     }
+
+    fclose(fp);
     free(string);
 }
 
@@ -70,10 +69,15 @@ void writeHistory()
 
     if (fp)
     {
-        for (int i = start; i % 21 != end % 21; ++i)
+        for (int i = start; i % hNum != end % hNum; ++i)
             fprintf(fp, "%s\n", his[i]);
 
         fclose(fp);
+    }
+    else
+    {
+        logError("fopen error");
+        return;
     }
 }
 
@@ -84,9 +88,9 @@ void printCommand(int argc, char** argv)
 
     ct = argc? stringToNum(argv[1]) : 10; // To print only the last 10 commands
 
-    for (int i = end - ct + 21; i % 21 != end % 21; ++i)
-        if (his[i % 21])
-            printf("%s\n", his[i % 21]);
+    for (int i = end - ct + hNum; i % hNum != end % hNum; ++i)
+        if (his[i % hNum])
+            printf("%s\n", his[i % hNum]);
 }
 
 char* getNextHistory(int* prev)

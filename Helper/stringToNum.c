@@ -10,7 +10,7 @@ int stringToNum(char* str)
         int ascii = str[i] - '0';
         if (ascii > 9 || ascii < 0)
         {
-            printf("Error: Number is not provided\n");
+            logStdError("Error: Number is not provided");
             return -1;
         }
         num += ascii;

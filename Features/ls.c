@@ -54,7 +54,7 @@ int ls(int argc, char** argv)
             {
                 char error[1000];
                 sprintf(error, "ls: cannot access '%s'", dirs[i]);
-                perror(error);
+                logError(error);
                 ++flag;
                 continue;
             }

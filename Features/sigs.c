@@ -7,26 +7,32 @@ void sig(char** argv, int argc)
 {
     if (argc > 2)
     {
-        printf("Too many arguments\n");
+        logStdError("Too many arguments");
         return;
     }
     else if (argc < 2)
     {
-        printf("Too less arguments\n");
+        logStdError("Too less arguments");
         return;
     }
 
     int jobNumber = stringToNum(argv[1]);
+
+    if (jobNumber < 1)
+        return;
+
     int sig = stringToNum(argv[2]);
+    if (sig < 1)
+        return;
 
     Node* node = getNodeNum(jobNumber);
 
     if (node)
     {
         if (kill(node->id, sig) < 0)
-            perror("Kill error");
+            logError("Kill error");
                 return;
     }
 
-    printf("Job doesn't exist\n");
+    logStdError("Job doesn't exist");
 }

@@ -7,7 +7,7 @@ void fg(char** argv, int argc)
 {
     if (!argc || argc > 1)
     {
-        printf("1 argument required\n");
+        logStdError("1 argument required");
         return;
     }
 
@@ -16,7 +16,7 @@ void fg(char** argv, int argc)
 
     if (!node)
     {
-        printf("Job doesn't exist\n");
+        logStdError("Job doesn't exist");
         return;
     }
 
@@ -25,19 +25,53 @@ void fg(char** argv, int argc)
     strcpy(fgDetails.command, node->command);
     strcpy(fgDetails.name, node->name);
 
+    if (kill(node->id, SIGCONT))
+    {
+        logError("kill error");
+        return;
+    }
+
     searchAndDeleteProcess(temp, node->id);
 
     int mainPID = getpgrp();
-
-    kill(node->id, SIGCONT);
     int status;
 
     if (waitpid(node->id, &status, WUNTRACED) == -1)
-        perror("waitpid error");
+        logError("waitpid error");
 
+    clearFg();
+    return;
+}
+
+void clearFg()
+{
     fgDetails.pid = -1;
     memset(fgDetails.name, 0, SIZE);
     memset(fgDetails.command, 0, SIZE);
+}
 
-    return;
+void addFgAr(int pid, char** command)
+{
+    if (!command[0])
+    {
+        logStdError("No command");
+        return;
+    }
+
+    char str[SIZE] = {0};
+    for (int i = 0; command[i]; ++i)
+        strcat(str, command[i]), strcat(str, " ");
+
+    str[strlen(str) - 1] = 0;
+
+    addFg(pid, command[0], str);
+}
+
+void addFg(int pid, char* name, char* command)
+{
+    clearFg();
+
+    strcpy(fgDetails.command, command);
+    fgDetails.pid = pid;
+    strcpy(fgDetails.name, name);
 }

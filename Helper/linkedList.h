@@ -19,6 +19,5 @@ void addProcess(char* name, char** command, int id);
 int searchAndDeleteProcess(char* name, int id);
 Node* getNodeNum(int num);
 Node* getHead();
-void print();
 
 #endif

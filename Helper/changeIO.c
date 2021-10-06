@@ -16,6 +16,10 @@ int changeIO(int fd, int current)
     }
 
     if (fd != current)
-        close(fd);
+        if (close(fd) == -1)
+        {
+            logError("close error");
+            return 0;
+        }
     return 1;
 }

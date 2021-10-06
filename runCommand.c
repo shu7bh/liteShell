@@ -4,6 +4,7 @@
 #include "Helper/token.h"
 #include "Helper/callWriitenFunctions.h"
 #include "Helper/inputOutputRedirection.h"
+#include "Helper/changeIO.h"
 #include <string.h>
 #include <fcntl.h>
 
@@ -22,37 +23,22 @@ void runCommand(char* inputBuffer)
 
     if (!inputOutputRedirection(argv, &argc))
     {
-        dup2(stdoutCopy, STDOUT_FILENO);
-        dup2(stdinCopy, STDIN_FILENO);
+        changeIO(stdoutCopy, STDOUT_FILENO);
+        changeIO(stdinCopy, STDIN_FILENO);
         return;
     }
 
     if (!callWrittenFunctions(argv, argc))
-    {
         if (bgprocess)
             makeChildBg(argv);
         else
             makeChildFg(argv);
-    }
-
-    strcpy(inputBuffer, temp);
-
+    else;
 
     for (int i = 0; i <= argc; ++i)
         free(argv[i]);
-
-    free(temp);
     free(argv);
 
-    if (dup2(stdoutCopy, STDOUT_FILENO) < 0 || dup2(stdinCopy, STDIN_FILENO) < 0)
-    {
-        logError("Dup2 error");
-        return;
-    }
-
-    /*if (stdinCopy != STDIN_FILENO)*/
-        /*close(stdinCopy);*/
-
-    if (stdoutCopy != STDOUT_FILENO)
-        close(stdoutCopy);
+    changeIO(stdoutCopy, STDOUT_FILENO);
+    changeIO(stdinCopy, STDIN_FILENO);
 }

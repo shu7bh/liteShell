@@ -12,12 +12,12 @@ void makeChildFg(char** argv)
     if (pid == 0) // Child process
     {
         if (execvp(argv[0], argv))
-            perror("Command not found");
+            logError("Command not found");
         exit(0);
     }
 
     else if (pid < 0) // Error forking
-        perror("Error forking");
+        logError("Error forking");
 
     else // Parent process
     {
@@ -47,14 +47,14 @@ void makeChildBg(char** argv)
         if (execvp(argv[0], argv) == -1)
         {
             char temp[100];
-            perror("Command not found");
+            logError("Command not found");
         }
 
         exit(0);
     }
 
     else if (pid < 0) // Error forking
-        perror("Error forking");
+        logError("Error forking");
 
     else // Parent process
     {

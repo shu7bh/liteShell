@@ -33,7 +33,7 @@ void fg(char** argv, int argc)
     int status;
 
     if (waitpid(node->id, &status, WUNTRACED) == -1)
-        perror("waitpid error");
+        logError("waitpid error");
 
     fgDetails.pid = -1;
     memset(fgDetails.name, 0, SIZE);

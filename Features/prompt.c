@@ -28,5 +28,5 @@ void prompt()
         reset();
     }
     else
-        perror("getcwd() error");
+        logError("getcwd() error");
 }

@@ -24,7 +24,7 @@ void sig(char** argv, int argc)
     if (node)
     {
         if (kill(node->id, sig) < 0)
-            perror("Kill error");
+            logError("Kill error");
                 return;
     }
 

@@ -85,7 +85,7 @@ int autoComplete(char* command, int* ct, int addOrSub)
 
         if (!fp)
         {
-            perror("fp error");
+            logError("fopen error");
             return 0;
         }
 
@@ -136,7 +136,7 @@ int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand)
     FILE* fin = fopen(path, "r");
     if (!fin)
     {
-        perror("fin error");
+        logError("fopen error");
         return 0;
     }
 

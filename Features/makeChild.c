@@ -10,7 +10,7 @@ void makeChildFg(char** argv)
     switch(pid)
     {
     case 0:
-        if (execvp(argv[0], argv))
+        if (execvp(argv[0], argv) == -1)
             logError("Command not found");
         exit(0);
 

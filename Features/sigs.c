@@ -17,7 +17,13 @@ void sig(char** argv, int argc)
     }
 
     int jobNumber = stringToNum(argv[1]);
+
+    if (jobNumber < 1)
+        return;
+
     int sig = stringToNum(argv[2]);
+    if (sig < 1)
+        return;
 
     Node* node = getNodeNum(jobNumber);
 

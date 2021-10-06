@@ -37,9 +37,6 @@ void commandComplete(char* inp, int len, int* pt)
 
     printf("%s", inp);
     *pt = strlen(inp);
-
-    /*if (inp[strlen(inp)] == ' ')*/
-        /**ct = 0;*/
 }
 
 char* input()
@@ -57,90 +54,95 @@ char* input()
 
     while (read(STDIN_FILENO, &c, 1) == 1)
     {
-        if (iscntrl(c))
-        {
-            if (c == 10)
-                break;
-            if (c == 27)
-            {
-                char buf[3];
-                buf[2] = 0;
-                if (read(STDIN_FILENO, buf, 2) == 2) // length of escape code
-                {
-                    if (buf[1] == 'A')
-                    {
-                        printf("\33[2K\r");
-                        prompt();
-                        memset(inp, '\0', SIZE);
-                        strcpy(inp, getNextHistory(&prev));
-                        printf("%s", inp);
-                        pt = strlen(inp);
-                    }
-                    else if (buf[1] == 'B')
-                    {
-                        printf("\33[2K\r");
-                        prompt();
-                        memset(inp, '\0', SIZE);
-                        strcpy(inp, getPrevHistory(&prev));
-                        printf("%s", inp);
-                        pt = strlen(inp);
-                    }
-                }
-            }
-            else if (c == 127)  // backspace
-            {
-                commandCompleteCt = 0;
-                if (pt > 0)
-                {
-                    if (inp[pt-1] == 9)
-                        for (int i = 0; i < 7; i++)
-                            printf("\b");
-                    inp[--pt] = '\0';
-                    printf("\b \b");
-                }
-            }
-            else if (c == 9)  // TAB character
-            {
-                int len = strlen(inp);
-                if (!autoComplete(inp, &commandCompleteCt, 1))
-                {
-                    commandCompleteCt = 0;
-                    inp[pt++] = c;
-                    for (int i = 0; i < 8; i++)  // TABS should be 8 spaces
-                        printf(" ");
-                }
-                else
-                    commandComplete(inp, len, &pt);
-            }
-            else if (c == 4)
-                exit(0);
-            else if (c == 2)
-            {
-                int len = strlen(inp);
-                if (autoComplete(inp, &commandCompleteCt, -1))
-                    commandComplete(inp, len, &pt);
-            }
-            else if (c == 14)
-            {
-                int len = strlen(inp);
-                if (autoComplete(inp, &commandCompleteCt, 1))
-                    commandComplete(inp, len, &pt);
-
-            }
-            else if (c == 12)
-            {
-                strcpy(inp, "clear");
-                break;
-            }
-            else
-                printf("%d\n", c);
-        }
-        else
+        if (!iscntrl(c))
         {
             commandCompleteCt = 0;
             inp[pt++] = c;
             printf("%c", c);
+            continue;
         }
+        switch(c)
+        {
+        case 2:
+        {
+            int len = strlen(inp);
+            if (autoComplete(inp, &commandCompleteCt, -1))
+                commandComplete(inp, len, &pt);
+            break;
+        }
+        case 4:
+            exit(0);
+        case 9:
+        {
+            int len = strlen(inp);
+            if (!autoComplete(inp, &commandCompleteCt, 1))
+            {
+                commandCompleteCt = 0;
+                inp[pt++] = c;
+                for (int i = 0; i < 8; i++)  // TABS should be 8 spaces
+                    printf(" ");
+            }
+            else
+                commandComplete(inp, len, &pt);
+            break;
+        }
+        case 10:
+            break;
+        case 12:
+            strcpy(inp, "clear");
+            break;
+        case 14:
+        {
+            int len = strlen(inp);
+            if (autoComplete(inp, &commandCompleteCt, 1))
+                commandComplete(inp, len, &pt);
+            break;
+        }
+        case 27:
+        {
+            char buf[3];
+            buf[2] = 0;
+
+            if (read(STDIN_FILENO, buf, 2) == 2) // length of escape code
+            {
+                if (buf[1] == 'A')
+                {
+                    printf("\33[2K\r");
+                    prompt();
+                    memset(inp, '\0', SIZE);
+                    strcpy(inp, getNextHistory(&prev));
+                    printf("%s", inp);
+                    pt = strlen(inp);
+                }
+                else if (buf[1] == 'B')
+                {
+                    printf("\33[2K\r");
+                    prompt();
+                    memset(inp, '\0', SIZE);
+                    strcpy(inp, getPrevHistory(&prev));
+                    printf("%s", inp);
+                    pt = strlen(inp);
+                }
+            }
+            break;
+        }
+        case 127:
+            commandCompleteCt = 0;
+            if (pt > 0)
+            {
+                if (inp[pt-1] == 9)
+                    for (int i = 0; i < 7; i++)
+                        printf("\b");
+                inp[--pt] = '\0';
+                printf("\b \b");
+            }
+            break;
+        default:
+            printf("%d\n", c);
+            break;
+        }
+        if (c == 10 || c == 12)
+            break;
     }
     disableRawMode();
     printf("\n");

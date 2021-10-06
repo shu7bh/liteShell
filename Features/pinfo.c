@@ -8,6 +8,9 @@ void pinfo(int argc, char **argv)
 {
     int pid = argc ? stringToNum(argv[1]) : getpid();
 
+    if (pid < 1)
+        return;
+
     char filepath[SIZE];
     sprintf(filepath, "/proc/%d/stat", pid);
 
@@ -16,7 +19,7 @@ void pinfo(int argc, char **argv)
 
     if (!fp)
     {
-        printf("Process doesn't exist\n");
+        logError("Process doesn't exist");
         return;
     }
 

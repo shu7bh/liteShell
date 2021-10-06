@@ -22,7 +22,10 @@ int inputOutputRedirection(char** argv, int* argc)
                     return 0;
             }
             else
+            {
+                logStdError("File not provided");
                 return 0;
+            }
         else if (!strcmp(str, ">"))
             if (i + 1 <= *argc)
             {
@@ -32,7 +35,10 @@ int inputOutputRedirection(char** argv, int* argc)
                     return 0;
             }
             else
+            {
+                logStdError("File not provided");
                 return 0;
+            }
         else if (!strcmp(str, ">>"))
             if (i + 1 <= *argc)
             {
@@ -42,17 +48,20 @@ int inputOutputRedirection(char** argv, int* argc)
                     return 0;
             }
             else
+            {
+                logStdError("File not provided");
                 return 0;
+            }
         else
             strcpy(argv[ct++], str);
     }
-    --ct;
 
-    for (int i = ct + 1; i <= *argc; ++i)
+    for (int i = ct--; i <= *argc; ++i)
     {
         free(argv[i]);
         argv[i] = 0;
     }
+
     *argc = ct;
     return 1;
 }

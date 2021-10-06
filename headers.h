@@ -20,5 +20,8 @@ typedef struct Fg
 } Fg;
 
 extern Fg fgDetails;
+void clearFg();
+void addFgAr(int pid, char** command);
+void addFg(int pid, char* name, char* command);
 
 #endif

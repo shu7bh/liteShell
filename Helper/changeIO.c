@@ -5,7 +5,7 @@ int changeIO(int fd, int current)
 {
     if (fd < 0)
     {
-        printf("Bad file descriptor\n");
+        logStdError("Bad file descriptor");
         return 0;
     }
 

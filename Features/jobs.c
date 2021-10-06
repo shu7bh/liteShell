@@ -14,13 +14,13 @@ void jobs(char** argv, int argc)
             flag = -1;
         else
         {
-            printf("Incorrect argument\n");
+            logStdError("Incorrect argument");
             return;
         }
     }
     else if (argc)
     {
-        printf("Too many arguments\n");
+        logStdError("Too many argumentsn");
         return;
     }
 
@@ -34,7 +34,7 @@ void jobs(char** argv, int argc)
 
         if (!fp)
         {
-            printf("Process doesn't exist\n");
+            logStdError("Process doesn't exist");
             return;
         }
 

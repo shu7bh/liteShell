@@ -5,11 +5,10 @@
 #include "makeChild.h"
 #include <dirent.h>
 
-char ogCommand[SIZE];
-
 int nextArgument(char* command, int* ct, int addOrSub, char* ogCommand);
 char * strrstr(char*s1, char* s2);
 
+char ogCommand[SIZE];
 int isCommand = 1;
 
 int autoComplete(char* command, int* ct, int addOrSub)
@@ -60,13 +59,15 @@ int autoComplete(char* command, int* ct, int addOrSub)
         {
             char* a = strrchr(curCommand, '/');
             if (a)
-            {
-                a[0] = 0;
-                strcpy(dir, curCommand);
-            }
+                if (!strcmp(a, curCommand))
+                    strcpy(dir, "/");
+                else
+                {
+                    a[0] = 0;
+                    strcpy(dir, curCommand);
+                }
             else
                 strcpy(dir, ".");
-
             isCommand = 0;
         }
         else

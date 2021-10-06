@@ -7,7 +7,7 @@ void bg(char** argv, int argc)
 {
     if (!argc || argc > 1)
     {
-        printf("1 argument required\n");
+        logStdError("1 argument required");
         return;
     }
 
@@ -16,7 +16,7 @@ void bg(char** argv, int argc)
 
     if (!node)
     {
-        printf("Job doesn't exist\n");
+        logStdError("Job doesn't exist");
         return;
     }
 

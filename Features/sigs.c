@@ -7,12 +7,12 @@ void sig(char** argv, int argc)
 {
     if (argc > 2)
     {
-        printf("Too many arguments\n");
+        logStdError("Too many arguments");
         return;
     }
     else if (argc < 2)
     {
-        printf("Too less arguments\n");
+        logStdError("Too less arguments");
         return;
     }
 
@@ -28,5 +28,5 @@ void sig(char** argv, int argc)
                 return;
     }
 
-    printf("Job doesn't exist\n");
+    logStdError("Job doesn't exist");
 }

@@ -19,7 +19,7 @@ void cd(char** argv, int argc)
     char temp[1000];
     getcwd(temp, 1000);
 
-    if (!argv || !strcmp(argv[1], "~"))
+    if (!argv[1] || !strcmp(argv[1], "~"))
         chdir(getHomeDir());
     else if (!strcmp(argv[1], "-"))
     {

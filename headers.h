@@ -7,14 +7,15 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <malloc.h>
+#include "Helper/colors.h"
 
 #define SIZE 4096
 
 typedef struct Fg
 {
     int pid;
+    char name[SIZE];
     char command[SIZE];
-    char args[SIZE];
 } Fg;
 
 extern Fg fgDetails;

@@ -21,17 +21,17 @@ void makeChildFg(char** argv)
 
     else // Parent process
     {
-        fgDetails.pid = getpid();
-        strcpy(fgDetails.command, argv[0]);
+        fgDetails.pid = pid;
+        strcpy(fgDetails.name, argv[0]);
         for (int i = 0; argv[i]; ++i)
         {
-            strcat(fgDetails.args, argv[i]);
-            strcat(fgDetails.args, " ");
+            strcat(fgDetails.command, argv[i]);
+            strcat(fgDetails.command, " ");
         }
         wpid = waitpid(pid, &status, WUNTRACED);
         fgDetails.pid = -1;
+        memset(fgDetails.name, 0, SIZE);
         memset(fgDetails.command, 0, SIZE);
-        memset(fgDetails.args, 0, SIZE);
     }
 }
 
@@ -41,9 +41,9 @@ void makeChildBg(char** argv)
     int status;
 
     pid = fork();
+
     if (pid == 0) // Child process
     {
-        setpgid(0, 0);
         if (execvp(argv[0], argv) == -1)
         {
             char temp[100];

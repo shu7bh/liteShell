@@ -36,7 +36,4 @@ void pipeIt(char* command)
     changeIO(stdinCopy, STDIN_FILENO);
 
     free(str);
-
-    close(stdinCopy);
-    close(stdoutCopy);
 }

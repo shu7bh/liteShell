@@ -3,7 +3,6 @@
 #include "Helper/pipe.h"
 #include "headers.h"
 #include "Helper/linkedList.h"
-#include "Helper/colors.h"
 #include "Features/processTermination.h"
 #include <signal.h>
 #include <stdlib.h>
@@ -17,8 +16,8 @@ void ctrlc(int sig)
     {
         kill(fgDetails.pid, SIGINT);
         fgDetails.pid = -1;
+        memset(fgDetails.name, 0, SIZE);
         memset(fgDetails.command, 0, SIZE);
-        memset(fgDetails.args, 0, SIZE);
 
         printf("\r");
     }
@@ -26,29 +25,28 @@ void ctrlc(int sig)
 
 void ctrlz(int sig)
 {
-    /*printf("%d %s %s\n", fgDetails.pid, fgDetails.command, fgDetails.args);*/
+    printf("\r");
     if (fgDetails.pid != -1)
     {
-        /*printf("%d", fgDetails.pid);*/
         kill(fgDetails.pid, SIGTSTP);
-        char* args[2];
-        args[0] = strdup(fgDetails.args);
-        args[1] = 0;
+        char* command[2];
+        command[0] = strdup(fgDetails.command);
+        command[1] = 0;
 
-        addProcess(fgDetails.command, args, fgDetails.pid);
+        addProcess(fgDetails.name, command, fgDetails.pid);
         fgDetails.pid = -1;
 
-        free(args[0]);
+        free(command[0]);
+        memset(fgDetails.name, 0, SIZE);
         memset(fgDetails.command, 0, SIZE);
-        memset(fgDetails.args, 0, SIZE);
     }
 }
 
 int main()
 {
     fgDetails.pid = -1;
+    memset(fgDetails.name, 0, SIZE);
     memset(fgDetails.command, 0, SIZE);
-    memset(fgDetails.args, 0, SIZE);
 
     makeProcessLinkedList();
     setPromptVar();

@@ -28,17 +28,28 @@ void addProcess(char* name, char** command, int id)
     Node* temp = head;
 
     while (temp->next)
-        if (strcmp(temp->next->name, name) > 0 || (!strcmp(temp->next->name, name) && temp->next->id < id))
+        if (strcmp(temp->next->command, str) > 0 || (!strcmp(temp->next->command, str) && temp->next->id > id))
         {
             node->next = temp->next;
             temp->next = node;
-            break;
+            return;
         }
         else
             temp = temp->next;
 
-    node->next = head->next;
-    head->next = node;
+    node->next = temp->next;
+    temp->next = node;
+}
+
+void print()
+{
+    Node* node = head->next;
+
+    while (node)
+    {
+        printf("%d %s\n", node->id, node->command);
+        node = node->next;
+    }
 }
 
 int searchAndDeleteProcess(char* name, int id)

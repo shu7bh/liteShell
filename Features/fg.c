@@ -3,6 +3,8 @@
 #include "../Helper/linkedList.h"
 #include "../Helper/stringToNum.h"
 
+Fg fgDetails;
+
 void fg(char** argv, int argc)
 {
     if (!argc || argc > 1)

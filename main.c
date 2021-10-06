@@ -1,41 +1,13 @@
+#include "Features/processTermination.h"
+#include "Features/signalHandler.h"
+#include "Features/history.h"
 #include "Features/prompt.h"
-#include "input.h"
+#include "Helper/linkedList.h"
 #include "Helper/pipe.h"
 #include "headers.h"
-#include "Helper/linkedList.h"
-#include "Features/processTermination.h"
+#include "input.h"
 #include <signal.h>
 #include <stdlib.h>
-#include "Features/history.h"
-
-Fg fgDetails;
-
-void ctrlc(int sig)
-{
-    if (fgDetails.pid != -1)
-    {
-        kill(fgDetails.pid, SIGINT);
-        clearFg();
-        printf("\r");
-    }
-}
-
-void ctrlz(int sig)
-{
-    printf("\r");
-    if (fgDetails.pid != -1)
-    {
-        kill(fgDetails.pid, SIGTSTP);
-        char* command[2];
-        command[0] = strdup(fgDetails.command);
-        command[1] = 0;
-
-        addProcess(fgDetails.name, command, fgDetails.pid);
-        free(command[0]);
-
-        clearFg();
-    }
-}
 
 int main()
 {

@@ -132,7 +132,7 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
                 sprintf(fullName, "%s/%s", dir, directory->d_name);
 
                 colors(fullName);
-                printf("%s   ", directory->d_name);
+                printf("%s\n", directory->d_name);
                 reset();
             }
             else
@@ -145,8 +145,6 @@ void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt)
 
                 printStats(fullName, directory->d_name);
             }
-        if (!l_flag)
-            printf("\n");
         closedir(d);
     }
     else if (l_flag)

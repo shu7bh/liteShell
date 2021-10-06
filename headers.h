@@ -20,6 +20,7 @@ typedef struct Fg
 } Fg;
 
 extern Fg fgDetails;
+extern int color;
 void clearFg();
 void addFgAr(int pid, char** command);
 void addFg(int pid, char* name, char* command);

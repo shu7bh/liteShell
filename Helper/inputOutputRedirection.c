@@ -29,6 +29,7 @@ int inputOutputRedirection(char** argv, int* argc)
         else if (!strcmp(str, ">"))
             if (i + 1 <= *argc)
             {
+                color = 0;
                 int fd = open(argv[i++ + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 
                 if (!changeIO(fd, STDOUT_FILENO))
@@ -42,6 +43,7 @@ int inputOutputRedirection(char** argv, int* argc)
         else if (!strcmp(str, ">>"))
             if (i + 1 <= *argc)
             {
+                color = 0;
                 int fd = open(argv[i++ + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 
                 if (!changeIO(fd, STDOUT_FILENO))

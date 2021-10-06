@@ -18,6 +18,7 @@ void pipeIt(char* command)
         argv[i++] = strdup(token);
 
     int fd[2];
+    color = 0;
 
     for (int j = 0; j < i - 1; ++j)
     {
@@ -32,6 +33,7 @@ void pipeIt(char* command)
     }
 
     changeIO(stdoutCopy, STDOUT_FILENO);
+    color = 1;
     runCommand(argv[i - 1]);
     changeIO(stdinCopy, STDIN_FILENO);
 

@@ -11,7 +11,7 @@ int changeIO(int fd, int current)
 
     if (dup2(fd, current) < 0)
     {
-        perror("Unable to duplicate file descriptor:");
+        logError("Unable to duplicate file descriptor:");
         return 0;
     }
 

@@ -23,7 +23,7 @@ void pipeIt(char* command)
     {
         if (pipe(fd) == -1)
         {
-            perror("Pipe error");
+            logError("Pipe error");
             return;
         }
         changeIO(fd[1], STDOUT_FILENO);

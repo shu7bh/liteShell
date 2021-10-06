@@ -8,6 +8,7 @@
 #include <string.h>
 #include <malloc.h>
 #include "Helper/colors.h"
+#include "Helper/logError.h"
 
 #define SIZE 4096
 

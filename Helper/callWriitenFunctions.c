@@ -18,9 +18,7 @@ int callWrittenFunctions(char** argv, int argc)
 {
     int present = 1;
     if (!strcmp(argv[0], "cd"))
-        if (cd(argv[1]))
-            perror("cd error");
-        else;
+        cd(argv, argc);
     else if (!strcmp(argv[0], "echo"))
         echo(argc, argv);
     else if (!strcmp(argv[0], "pwd"))
@@ -43,8 +41,6 @@ int callWrittenFunctions(char** argv, int argc)
         fg(argv, argc);
     else if (!strcmp(argv[0], "bg"))
         bg(argv, argc);
-    else if (!strcmp(argv[0], "print"))
-        print();
     else
         present = 0;
     return present;

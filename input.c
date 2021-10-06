@@ -9,7 +9,7 @@
 
 void die(const char *s)
 {
-    perror(s);
+    logError(s);
     exit(1);
 }
 

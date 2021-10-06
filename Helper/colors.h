@@ -8,6 +8,7 @@ void yellow();
 void magenta();
 void reset();
 void cPrompt();
+void errorRed();
 
 #endif
 

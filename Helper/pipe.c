@@ -1,6 +1,7 @@
 #include "pipe.h"
 #include "../headers.h"
 #include "../runCommand.h"
+#include "../Helper/changeIO.h"
 
 void pipeIt(char* command)
 {
@@ -25,39 +26,14 @@ void pipeIt(char* command)
             perror("Pipe error");
             return;
         }
-
-        if (dup2(fd[1], STDOUT_FILENO) < 0)
-        {
-            perror("dup2 error");
-            return;
-        }
-
-        if (fd[1] != STDOUT_FILENO)
-            close(fd[1]);
-
+        changeIO(fd[1], STDOUT_FILENO);
         runCommand(argv[j]);
-
-        if (dup2(fd[0], STDIN_FILENO) < 0)
-        {
-            perror("dup2 error");
-            return;
-        }
-
-        if (fd[0] != STDIN_FILENO)
-            close(fd[0]);
+        changeIO(fd[0], STDIN_FILENO);
     }
 
-    if (dup2(stdoutCopy, STDOUT_FILENO) < 0)
-    {
-        perror("dup2 error");
-        return;
-    }
-
+    changeIO(stdoutCopy, STDOUT_FILENO);
     runCommand(argv[i - 1]);
+    changeIO(stdinCopy, STDIN_FILENO);
 
-    dup2(stdinCopy, STDIN_FILENO);
     free(str);
-
-    close(stdinCopy);
-    close(stdoutCopy);
 }

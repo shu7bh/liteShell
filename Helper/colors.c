@@ -30,3 +30,7 @@ void cPrompt()
     printf("\033[1;96m");
 }
 
+void errorRed()
+{
+    fprintf(stderr, "\033[0;91m");
+}

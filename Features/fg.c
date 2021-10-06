@@ -21,21 +21,23 @@ void fg(char** argv, int argc)
     }
 
     char temp[SIZE];
+    fgDetails.pid = node->id;
+    strcpy(fgDetails.command, node->command);
+    strcpy(fgDetails.name, node->name);
+
     searchAndDeleteProcess(temp, node->id);
 
     int mainPID = getpgrp();
 
-    signal(SIGTTIN, SIG_IGN);
-    signal(SIGTTOU, SIG_IGN);
-
-    tcsetpgrp(STDIN_FILENO, node->id);
     kill(node->id, SIGCONT);
     int status;
-    waitpid(node->id, &status, WUNTRACED);
 
-    tcsetpgrp(STDIN_FILENO, mainPID);
+    if (waitpid(node->id, &status, WUNTRACED) == -1)
+        perror("waitpid error");
 
-    signal(SIGTTIN, SIG_DFL);
-    signal(SIGTTOU, SIG_DFL);
+    fgDetails.pid = -1;
+    memset(fgDetails.name, 0, SIZE);
+    memset(fgDetails.command, 0, SIZE);
+
     return;
 }

@@ -9,6 +9,9 @@ void magenta();
 void reset();
 void cPrompt();
 
+void promptDarkGray();
+void promptReset();
+
 void errorRed();
 void errorReset();
 

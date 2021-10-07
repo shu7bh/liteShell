@@ -8,7 +8,6 @@ char his[10002][SIZE] = {0};
 int start = 0;
 int end = 0;
 
-void loadHistory();
 void writeHistory();
 
 void addCommand(char* command)

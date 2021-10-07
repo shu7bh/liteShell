@@ -13,8 +13,9 @@ int main()
 {
     clearFg();
 
-    makeProcessLinkedList();
     setPromptVar();
+    loadHistory();
+    makeProcessLinkedList();
     reset();
 
 	signal(SIGINT, ctrlc);

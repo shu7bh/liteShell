@@ -11,7 +11,7 @@
 void runCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);
-    char** argv = malloc(SIZE);
+    char** argv = malloc(SIZE * sizeof(char*));
     int argc = 0;
     int bgprocess;
 

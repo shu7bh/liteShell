@@ -11,7 +11,7 @@ void pinfo(int argc, char **argv)
     if (pid < 1)
         return;
 
-    char filepath[SIZE];
+    char filepath[SIZE] = {0};
     sprintf(filepath, "/proc/%d/stat", pid);
 
     FILE* fp;
@@ -23,7 +23,7 @@ void pinfo(int argc, char **argv)
         return;
     }
 
-    char statString[35][60];
+    char statString[35][60] = {0};
 
     for (int i = 0; i < 30; ++i)
         fscanf(fp, "%s", statString[i]);
@@ -32,10 +32,10 @@ void pinfo(int argc, char **argv)
 
     sprintf(filepath, "/proc/%d/exe", pid);
 
-    char executablepath[SIZE];
+    char executablepath[SIZE] = {0};
     int len = readlink(filepath, executablepath, sizeof(executablepath));
 
-    char relativePath[SIZE];
+    char relativePath[SIZE] = {0};
 
     if (!strcmp(executablepath, getHomeDir()))
         sprintf(relativePath, "~");

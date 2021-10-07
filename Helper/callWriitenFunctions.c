@@ -10,6 +10,7 @@
 #include "../Features/sigs.h"
 #include "../Features/fg.h"
 #include "../Features/bg.h"
+#include "../Features/replay.h"
 #include "linkedList.h"
 #include "cwd.h"
 #include <stdlib.h>
@@ -41,6 +42,8 @@ int callWrittenFunctions(char** argv, int argc)
         fg(argv, argc);
     else if (!strcmp(argv[0], "bg"))
         bg(argv, argc);
+    else if (!strcmp(argv[0], "replay"))
+        replay(argv, argc);
     else
         present = 0;
     return present;

@@ -35,9 +35,7 @@ void fg(char** argv, int argc)
 
     searchAndDeleteProcess(temp, node->id);
 
-    int mainPID = getpgrp();
     int status;
-
     if (waitpid(node->id, &status, WUNTRACED) == -1)
         logError("waitpid error");
 

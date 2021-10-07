@@ -20,6 +20,9 @@ make
 - Accessing history through up and down arrow key
 - Different colours for file and directories
 - Autocompletion: It shows the possible options. These options may not always the possible to run. To invoke it, you have to type the first few letters of the command and then press `tab`. As soon as this is pressed, it finds the possible completion options which you can use. To go to the next possible option, you can either press `tab` or `^n`. If you have gone over all the possible commands, it will circulate from the beginning. On the other hand, if you want to go back, you have to use `^b`.
+- Input/Output redirection
+- Piping is implemented, so multiple commands can be run directly
+- Handling signal such as ^c, ^z, ^d
 
 ## Commands
 
@@ -102,6 +105,47 @@ repeat n command args
 history
 history 15
 ```
+
+- jobs: Prints the list of all currently running background processes spawned by the shell in alphabetical order along with the job number and other info. Takes 2 arguments (-s -r)
+
+```bash
+jobs
+jobs -s
+jobs -r
+```
+
+- sig: Takes the job number of a running job and sends the signal corresponding to signal number to that process.
+
+```bash
+sig 2 9
+```
+
+Above command gives signal 9 to job 2
+
+- fg: fg Brings the running or stopped background job corresponding to job number to the foreground, and changes its state to running
+
+```bash
+fg 4
+```
+
+Above command brings the 2nd job to the foreground
+
+- bg: Changes the state of a stopped background job to running (in the background)
+
+```bash
+bg 2
+```
+
+Above command brings the 4th job to running state in the background
+
+- replay: This command executes a particular command in fixed time interval for a certain period.
+
+```bash
+replay -command echo "hello" >> a.txt -interval 3 -period 6
+```
+
+Above command runs `echo "hello" >> a.txt` 2 times, once at 3 seconds and then once at 6 seconds
+
 ## Exit
 
 If you want to exit the shell, type exit

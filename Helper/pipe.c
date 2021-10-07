@@ -28,13 +28,13 @@ void pipeIt(char* command)
             return;
         }
         changeIO(fd[1], STDOUT_FILENO);
-        runCommand(argv[j]);
+        preRunCommand(argv[j]);
         changeIO(fd[0], STDIN_FILENO);
     }
 
     changeIO(stdoutCopy, STDOUT_FILENO);
     color = 1;
-    runCommand(argv[i - 1]);
+    preRunCommand(argv[i - 1]);
     changeIO(stdinCopy, STDIN_FILENO);
 
     free(str);

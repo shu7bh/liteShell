@@ -14,9 +14,9 @@ void ctrlc(int sig)
 
 void ctrlz(int sig)
 {
-    printf("\r");
     if (fgDetails.pid != -1)
     {
+        printf("\r");
         kill(fgDetails.pid, SIGTSTP);
         char* command[2];
         command[0] = strdup(fgDetails.command);

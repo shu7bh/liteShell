@@ -1,6 +1,7 @@
 #ifndef RUN_COMMAND_H
 #define RUN_COMMAND_H
 
-void runCommand();
+void preRunCommand(char* inputBuffer);
+void runCommand(char** argv, int argc, int bgFlag);
 
 #endif

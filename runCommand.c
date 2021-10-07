@@ -1,23 +1,33 @@
+#include "Helper/inputOutputRedirection.h"
+#include "Helper/callWriitenFunctions.h"
+#include "Features/makeChild.h"
+#include "Helper/changeIO.h"
+#include "Helper/token.h"
 #include "runCommand.h"
 #include "headers.h"
-#include "Features/makeChild.h"
-#include "Helper/token.h"
-#include "Helper/callWriitenFunctions.h"
-#include "Helper/inputOutputRedirection.h"
-#include "Helper/changeIO.h"
 #include <string.h>
 #include <fcntl.h>
 
-void runCommand(char* inputBuffer)
+void preRunCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);
     char** argv = malloc(SIZE * sizeof(char*));
     int argc = 0;
-    int bgprocess;
+    int bgFlag;
 
-    if (!tokenize(inputBuffer, argv, &argc, &bgprocess))
+    if (!tokenize(inputBuffer, argv, &argc, &bgFlag))
         return;
 
+    runCommand(argv, argc, bgFlag);
+
+    for (int i = 0; i <= argc; ++i)
+        free(argv[i]);
+    free(argv);
+    argv = 0;
+}
+
+void runCommand(char** argv, int argc, int bgFlag)
+{
     int stdoutCopy = dup(STDOUT_FILENO);
     int stdinCopy = dup(STDIN_FILENO);
 
@@ -28,16 +38,12 @@ void runCommand(char* inputBuffer)
         return;
     }
 
-    if (!callWrittenFunctions(argv, argc))
-        if (bgprocess)
+    if (!callWrittenFunctions(argv, argc, bgFlag))
+        if (bgFlag)
             makeChildBg(argv);
         else
             makeChildFg(argv);
     else;
-
-    for (int i = 0; i <= argc; ++i)
-        free(argv[i]);
-    free(argv);
 
     changeIO(stdoutCopy, STDOUT_FILENO);
     changeIO(stdinCopy, STDIN_FILENO);

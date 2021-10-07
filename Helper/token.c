@@ -13,7 +13,7 @@ int tokenize(char* inputBuffer, char** argv, int* argc, int* bgprocess)
     while ((token = strtok_r(NULL, " \t\r", &safePtr)))
         argv[++*argc] = strdup(token);
 
-    if (argv[*argc][0] == '&')
+    if (!strcmp(argv[*argc], "&"))
         argv[(*argc)--] = 0, *bgprocess = 1;
     else
         *bgprocess = 0;

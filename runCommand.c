@@ -38,7 +38,7 @@ void runCommand(char** argv, int argc, int bgFlag)
         return;
     }
 
-    if (!callWrittenFunctions(argv, argc))
+    if (!callWrittenFunctions(argv, argc, bgFlag))
         if (bgFlag)
             makeChildBg(argv);
         else

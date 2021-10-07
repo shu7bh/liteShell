@@ -15,7 +15,7 @@
 #include "cwd.h"
 #include <stdlib.h>
 
-int callWrittenFunctions(char** argv, int argc)
+int callWrittenFunctions(char** argv, int argc, int bgFlag)
 {
     int present = 1;
     if (!strcmp(argv[0], "cd"))
@@ -29,7 +29,7 @@ int callWrittenFunctions(char** argv, int argc)
     else if (!strcmp(argv[0], "ls"))
         ls(argc, argv);
     else if (!strcmp(argv[0], "repeat"))
-        repeat(argc, argv);
+        repeat(argc, argv, bgFlag);
     else if (!strcmp(argv[0], "pinfo"))
         pinfo(argc, argv);
     else if (!strcmp(argv[0], "history"))

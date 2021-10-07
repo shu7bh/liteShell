@@ -76,7 +76,7 @@ void replay(char** argv, int argc)
 
     int bgFlag;
     if (!strcmp(command[ct], "&"))
-        argv[ct--] = 0, bgFlag = 1;
+        command[ct--] = 0, bgFlag = 1;
     else
         bgFlag = 0;
 

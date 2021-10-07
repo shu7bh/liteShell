@@ -47,18 +47,18 @@ void loadHistory()
     if (!fp)
         return;
 
-    size_t size = SIZE;
-    char* string = malloc(size);
-    ssize_t read;
+    size_t size = 0;
+    char* string = 0;
 
-    while (end < hNum && (read = getline(&string, &size, fp) != -1))
+    while (getline(&string, &size, fp) != -1)
     {
-        string[strlen(string) - 1] = 0;
+        string[strcspn(string, "\n")] = 0;
         strcpy(his[end++], string);
     }
 
     fclose(fp);
-    free(string);
+    if (string)
+        free(string);
 }
 
 void writeHistory()

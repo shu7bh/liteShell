@@ -41,7 +41,7 @@ void commandComplete(char* inp, int len, int* pt)
 
 char* input()
 {
-    char *inp = malloc(sizeof(char) * SIZE);
+    char *inp = malloc(SIZE);
     char c;
 
     setbuf(stdout, NULL);

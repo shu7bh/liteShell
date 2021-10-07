@@ -4,7 +4,7 @@
 #include "../Helper/stringToNum.h"
 
 const int hNum = 10001;
-char his[10001][SIZE] = {0};
+char his[10002][SIZE] = {0};
 int start = 0;
 int end = 0;
 
@@ -16,20 +16,12 @@ void addCommand(char* command)
     loadHistory();
 
     if (end)
-        if (!strcmp(his[(end - 1) % hNum], command))
+        if (!strcmp(his[(end - 1)], command))
             return;
-        else if (his[end % hNum])
-        {
-            strcpy(his[end % hNum], command);
-            ++end;
-            if (start % hNum == end % hNum)
-                ++start;
-        }
         else
         {
-            strcpy(his[end % hNum], command);
-            ++end;
-            if (start % hNum == end % hNum)
+            strcpy(his[end++], command);
+            if (end == hNum)
                 ++start;
         }
     else
@@ -43,6 +35,9 @@ void loadHistory()
     char path[SIZE];
     sprintf(path, "%s/.liteShell/history.txt", getHomeDir());
     FILE* fp = fopen(path, "r");
+
+    start = 0;
+    end = 0;
 
     if (!fp)
         return;
@@ -69,7 +64,7 @@ void writeHistory()
 
     if (fp)
     {
-        for (int i = start; i % hNum != end % hNum; ++i)
+        for (int i = start; i != end; ++i)
             fprintf(fp, "%s\n", his[i]);
 
         fclose(fp);
@@ -88,9 +83,15 @@ void printCommand(int argc, char** argv)
 
     ct = argc? stringToNum(argv[1]) : 10; // To print only the last 10 commands
 
-    for (int i = end - ct + hNum; i % hNum != end % hNum; ++i)
-        if (his[i % hNum])
-            printf("%s\n", his[i % hNum]);
+    if (ct < 0)
+    {
+        logStdError("Give a number greater than 0");
+        return;
+    }
+
+    for (int i = end < ct? 0 : end - ct; i != end; ++i)
+        if (his[i])
+            printf("%s\n", his[i]);
 }
 
 char* getNextHistory(int* prev)

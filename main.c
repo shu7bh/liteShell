@@ -3,11 +3,14 @@
 #include "Features/history.h"
 #include "Features/prompt.h"
 #include "Helper/linkedList.h"
+#include "Helper/homeDir.h"
 #include "Helper/pipe.h"
 #include "headers.h"
 #include "input.h"
 #include <signal.h>
 #include <stdlib.h>
+
+void displayGraphicArt();
 
 int main()
 {
@@ -22,6 +25,8 @@ int main()
 	signal(SIGTSTP, ctrlz);
     signal(SIGCHLD, handleProcessTermination);
 
+    displayGraphicArt();
+
     while (1)
     {
         prompt();
@@ -35,4 +40,31 @@ int main()
         free(inp);
     }
     return 0;
+}
+
+void displayGraphicArt()
+{
+    char path[SIZE] = {0};
+    sprintf(path, "%s/.liteShell/asciiGrapic.txt", getHomeDir());
+
+    FILE* fp = fopen(path, "r");
+    if (!fp)
+    {
+        logError("fopen error");
+        return;
+    }
+
+    char *str = malloc(SIZE);
+    size_t size = SIZE;
+
+    magenta();
+    printf("\n\n");
+
+    while (getline(&str, &size, fp) != -1)
+        printf("%s", str);
+
+    printf("\n");
+    reset();
+
+    free(str);
 }

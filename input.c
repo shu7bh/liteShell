@@ -3,6 +3,7 @@
 #include "Features/history.h"
 #include "Features/prompt.h"
 #include "Features/commandAutoCompletion.h"
+#include "Features/autoSuggestions.h"
 #include <termios.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -39,6 +40,16 @@ void commandComplete(char* inp, int len, int* pt)
     *pt = strlen(inp);
 }
 
+void callAutoSuggestion(char* inp, char* autoSug)
+{
+    strcpy(autoSug, autoSuggestions(inp));
+    promptDarkGray();
+    printf("%s", autoSug);
+    for (int i = 0; i < strlen(autoSug); ++i)
+        printf("\b");
+    promptReset();
+}
+
 char* input()
 {
     char *inp = malloc(SIZE);
@@ -51,14 +62,26 @@ char* input()
     int pt = 0;
     int prev = 0;
     int commandCompleteCt = 0;
+    char autoSug[SIZE] = {0};
 
     while (read(STDIN_FILENO, &c, 1) == 1)
     {
+        for (int i = 0; i <= strlen(autoSug); ++i)
+            printf(" ");
+        for (int i = 0; i <= strlen(autoSug); ++i)
+            printf("\b");
+
+        printf("\r");
+        prompt();
+        printf("%s", inp);
+
         if (!iscntrl(c))
         {
             commandCompleteCt = 0;
             inp[pt++] = c;
             printf("%c", c);
+
+            callAutoSuggestion(inp, autoSug);
             continue;
         }
         switch(c)
@@ -68,10 +91,16 @@ char* input()
             int len = strlen(inp);
             if (autoComplete(inp, &commandCompleteCt, -1))
                 commandComplete(inp, len, &pt);
+            callAutoSuggestion(inp, autoSug);
             break;
         }
         case 4:
             exit(0);
+        case 6:
+            strcat(inp, autoSug);
+            printf("%s", autoSug);
+            pt += strlen(autoSug);
+            break;
         case 9:
         {
             int len = strlen(inp);
@@ -84,6 +113,8 @@ char* input()
             }
             else
                 commandComplete(inp, len, &pt);
+
+            callAutoSuggestion(inp, autoSug);
             break;
         }
         case 10:
@@ -96,6 +127,7 @@ char* input()
             int len = strlen(inp);
             if (autoComplete(inp, &commandCompleteCt, 1))
                 commandComplete(inp, len, &pt);
+            callAutoSuggestion(inp, autoSug);
             break;
         }
         case 27:
@@ -124,6 +156,7 @@ char* input()
                     pt = strlen(inp);
                 }
             }
+            callAutoSuggestion(inp, autoSug);
             break;
         }
         case 127:
@@ -136,11 +169,13 @@ char* input()
                 inp[--pt] = '\0';
                 printf("\b \b");
             }
+            callAutoSuggestion(inp, autoSug);
             break;
         default:
             printf("%d\n", c);
             break;
         }
+
         if (c == 10 || c == 12)
             break;
     }

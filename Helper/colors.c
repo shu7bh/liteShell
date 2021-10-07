@@ -8,34 +8,50 @@ void green()
     if (color)
         printf("\033[0;92m");
 }
+
 void blue()
 {
     if (color)
         printf("\033[0;94m");
 }
+
 void red()
 {
     if (color)
         printf("\033[0;91m");
 }
+
 void yellow()
 {
     if (color)
         printf("\033[0;93m");
 }
+
 void magenta()
 {
     if (color)
         printf("\033[0;95m");
 }
+
 void reset()
 {
     if (color)
         printf("\033[0;97m");
 }
+
 void cPrompt()
 {
     printf("\033[1;96m");
+}
+
+void promptDarkGray()
+{
+    printf("\033[1;30m");
+}
+
+void promptReset()
+{
+    printf("\033[0;97m");
 }
 
 void errorRed()

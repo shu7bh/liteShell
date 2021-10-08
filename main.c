@@ -44,27 +44,16 @@ int main()
 
 void displayGraphicArt()
 {
-    char path[SIZE] = {0};
-    sprintf(path, "%s/.liteShell/asciiGrapic.txt", getHomeDir());
-
-    FILE* fp = fopen(path, "r");
-    if (!fp)
-    {
-        logError("fopen error");
-        return;
-    }
-
-    char *str = malloc(SIZE);
-    size_t size = SIZE;
-
     magenta();
     printf("\n\n");
 
-    while (getline(&str, &size, fp) != -1)
-        printf("%s", str);
+    printf(".__  .__  __                .__           .__  .__\n");
+    printf("|  | |__|/  |_  ____   _____|  |__   ____ |  | |  |\n");
+    printf("|  | |  \\   __\\/ __ \\ /  ___/  |  \\_/ __ \\|  | |  |\n");
+    printf("|  |_|  ||  | \\  ___/ \\___ \\|   Y  \\  ___/|  |_|  |_\n");
+    printf("|____/__||__|  \\___  /____  |___|  /\\___  |____/____/\n");
+    printf("                   \\/     \\/     \\/     \\/\n");
 
-    printf("\n");
+    printf("\n\n\n");
     reset();
-
-    free(str);
 }

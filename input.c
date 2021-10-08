@@ -137,24 +137,36 @@ char* input()
 
             if (read(STDIN_FILENO, buf, 2) == 2) // length of escape code
             {
-                if (buf[1] == 'A')
+                switch (buf[1])
                 {
+                case 'A':
                     printf("\33[2K\r");
                     prompt();
                     memset(inp, '\0', SIZE);
                     strcpy(inp, getNextHistory(&prev));
                     printf("%s", inp);
                     pt = strlen(inp);
-                }
-                else if (buf[1] == 'B')
-                {
+                    break;
+
+                case 'B':
                     printf("\33[2K\r");
                     prompt();
                     memset(inp, '\0', SIZE);
                     strcpy(inp, getPrevHistory(&prev));
                     printf("%s", inp);
                     pt = strlen(inp);
+                    break;
+
+                case 'C':
+                    strcat(inp, autoSug);
+                    printf("%s", autoSug);
+                    pt += strlen(autoSug);
+                    break;
+
+                default:
+                    break;
                 }
+
             }
             callAutoSuggestion(inp, autoSug);
             break;

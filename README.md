@@ -1,15 +1,24 @@
-# liteShell
+#
 
-It is a linux shell with basic features. It supports most funcitonalities including multiple commands execution and running background and foreground processes. Command and directory autocompletion is also supported.
+```txt
+.__  .__  __                .__           .__  .__
+|  | |__|/  |_  ____   _____|  |__   ____ |  | |  |
+|  | |  \   __\/ __ \ /  ___/  |  \_/ __ \|  | |  |
+|  |_|  ||  | \  ___/ \___ \|   Y  \  ___/|  |_|  |__
+|____/__||__|  \___  /___   |___|  /\___  |____/____/
+                   \/     \/     \/     \/
+```
 
-**New Feature** Auto Suggestions implemented. You can use ^f or right arrow key to complete it
+*Ease with comfort* $\text{---}$ that's what liteShell is all about!
+
+liteShell provides you with a whole new experience by introducing a fancy, memorable shell that allows you to handle commands without a monotonous overtone.
 
 ## Running
 
-Run the following commands on your terminal
+Paste the following code in your terminal where you want to this shell to exist in
 
 ```bash
-git clone https://github.com/shu7bh/liteShell.git
+git clone git@github.com:shu7bh/liteShell.git
 cd liteShell
 make
 ./liteShell
@@ -17,141 +26,244 @@ make
 
 ## Features
 
-- It is a shell, which has basic features. Multiple commands can be given at the same time separated by `;`
-- It accounts for tabs and spaces.
-- Accessing history through up and down arrow key
-- Different colours for file and directories
-- Autocompletion: It shows the possible options. These options may not always the possible to run. To invoke it, you have to type the first few letters of the command and then press `tab`. As soon as this is pressed, it finds the possible completion options which you can use. To go to the next possible option, you can either press `tab` or `^n`. If you have gone over all the possible commands, it will circulate from the beginning. On the other hand, if you want to go back, you have to use `^b`.
-- Input/Output redirection
-- Piping is implemented, so multiple commands can be run directly
-- Handling signal such as ^c, ^z, ^d
-- Auto Suggestions. Shows you a probable suggestion in a greyed out color. It reads it from your history. The more commands you have written, the more likely you will be able to use Auto Suggestions. You can use ^f or right arrow key to fill in the suggestion
+1. ### Auto-Suggestions
+
+   - Based on your history of commands, it provides suggestions through which you can convenienty write your code.
+   - The suggestion will be shown as a greyed out text.
+   - If you want to add that piece of text, you can just run `Ctrl+f` or `right arrow key`
+
+   ![AutoSuggestion_1](Pics/autoSuggestions_1.png)
+   ![AutoSuggestion_2](Pics/autoSuggestions_2.png)
+
+2. ### Tab Autocompletion
+
+   - If you don't exactly remember the command you want to execute or the files, you can use tab to provide you with options!
+   - To invoke it, just type some characters corresponding to it, and then use `tab` or `Ctrl+n`.
+   - To go through the suggestions in the reverse order, you can use `Ctrl+b`
+
+   ![tabAutoCompletion_1](Pics/tabAutoCompletion_1.png)
+   ![tabAutoCompletion_2](Pics/tabAutoCompletion_2.png)
+   ![tabAutoCompletion_3](Pics/tabAutoCompletion_3.png)
+
+3. ### Piping
+
+   - Provides the output of the first command as the input of the next command.
+   - Helps to easily segregate, sort, and finally get the preferred output
+
+   ```sh
+   ls | wc
+   ```
+
+   the `wc` command takes the output from `ls` and prints to the screen
+
+4. ### Input Outpute Redirection
+
+   - Feature to provide input to your command or take the output from the command to a file.
+
+   ```sh
+   cat main.c > copyOfMain.c
+   wc < makefile
+   echo hello >> helloWorld.txt
+   ```
+
+   - This feature can be used with pipe to give you full command over your input.
+
+   ```sh
+   ls | wc > a.txt
+   cat < headers.h | sort | tail > a.txt
+   ```
+
+5. ### Multiple commands
+
+   - Using `;`, we can execute multiple commands in a single line.
+
+   ```sh
+   ls; sleep 50; firefox &; nvim
+   ```
+
+   First executes ls, then sleeps for 50 seconds, opens firefox in the background and then opens nvim in the foreground.
+
+6. ### Accessing history
+
+   - By using up or down arrow key, you can easily go through your previous commands and execute them.
+   - To invoke, just press the `up arrow key` or `down arrow key` in your input and it provides you with them. Multiple presses of the same key goes through multiple previous commands.
+   - As liteShell stores for upto 10,000 recent commands, there's enough of a database for you to work with.
+
+   ![history_1](Pics/history_1.png)
+   ![history_2](Pics/history_2.png)
+
+7. ### Signal Handling
+
+   - Can easily kill a process, send it to background, bring it to foreground, or just terminate it using signals.
+   - Some signals:
+     - `Ctrl+c`: To kill a foreground process
+     - `Ctrl+z`: To suspend a foreground process and send it to the background process
+     - `Ctrl+d`: To log out of the shell
+
+   ![signalHandling](Pics/signalHandling.png)
+
+8. ### Colorful
+
+   - Provides colorful prompt, error messages, directories and files to easily distinguish and keep it a refreshing shell experience.
+
+   ![colorful](Pics/color.png)
 
 ## Commands
 
-- cd: Change directory Multiple flags are handled
+1. ### cd
 
-```bash
-  cd
-  cd .
-  cd ..
-  cd ~
-  cd dir
-```
+   Change directory Multiple flags are handled
 
-- echo: prints a message onto the screen
+   ```sh
+   cd
+   cd .
+   cd ..
+   cd ~
+   cd dir
+   ```
 
-```bash
-echo message
-```
+2. ### echo
 
-- ls: Lists directory and flies (flags which can be used are -a and -l)
+   prints a message onto the screen
 
-```bash
-ls <dir>
-ls -a <dir>
-ls -l <dir>
-ls -la <dir>
-ls -al <dir>
-```
+   ```sh
+   echo message
+   ```
 
-- pinfo: Prins the details of a particular process. If no argument is given, it prints details of the foreground process
+3. ### ls
 
-```sh
-pinfo
-pinfo <pid>
-```
+   Lists directory and flies (flags which can be used are -a and -l)
 
-- Foreground process: These are the processes that work in the foreground and execute. We cannot run any other command during this.
+   ```sh
+   ls <dir>
+   ls -a <dir>
+   ls -l <dir>
+   ls -la <dir>
+   ls -al <dir>
+   ```
 
-```bash
-vim
-nvim
-top
-```
+4. ### pinfo
 
-To run any process in foreground, type the name of the command the arguments required by it
+   Prints the details of a particular process. If no argument is given, it prints details of the foreground process
 
-```bash
-command args
-```
+   ```sh
+   pinfo
+   pinfo <pid>
+   ```
 
-- Background process: These are the ones that run in the background. Another instance is open in some cases.
+5. ### Foreground process
 
-```bash
-gedit &
-emacs &
-sleep 5 &
-```
+   These are the processes that work in the foreground and execute. We cannot run any other command during this.
 
-To run any process, run & at the end to make it work in the background. Not all processes can be run in the background though
+   ```sh
+   vim
+   nvim
+   top
+   sleep 5
+   ```
 
-```bash
-command args &
-```
+   To run any process in foreground, type the name of the command the arguments required by it
 
-- repeat: You can use this to repeat the same command multiple times. It takes one argument, i.e. the time in seconds.
+   ```sh
+   command args
+   ```
 
-```bash
-repeat 5 cd ..
-```
+6. ### Background process
 
-The above command goes to the 5th parent directory, if it exists. In general, for any command, it has to be executed like this
+   These are the ones that run in the background. Another instance is open in some cases.
 
-```bash
-repeat n command args
-```
+   ```sh
+   gedit &
+   emacs &
+   sleep 5 &
+   ```
 
-- history: Shows the history of the commands input by us. Default is to print the last 10 commands. Can print a max of 20 previous commands.
+   To run any process, run & at the end to make it work in the background. Not all processes can be run in the background though
 
-```bash
-history
-history 15
-```
+   ```sh
+   command args &
+   ```
 
-- jobs: Prints the list of all currently running background processes spawned by the shell in alphabetical order along with the job number and other info. Takes 2 arguments (-s -r)
+7. ### repeat
 
-```bash
-jobs
-jobs -s
-jobs -r
-```
+   You can use this to repeat the same command multiple times. It takes one argument, i.e. the time in seconds.
 
-- sig: Takes the job number of a running job and sends the signal corresponding to signal number to that process.
+   ```sh
+   repeat 5 cd ..
+   ```
 
-```bash
-sig 2 9
-```
+   The above command goes to the 5th parent directory, if it exists. In general, for any command, it has to be executed like this
 
-Above command gives signal 9 to job 2
+   ```sh
+   repeat n command args
+   ```
 
-- fg: fg Brings the running or stopped background job corresponding to job number to the foreground, and changes its state to running
+8. ### history
 
-```bash
-fg 4
-```
+   Shows the history of the commands input by us. Default is to print the last 10 commands. Can print a max of 20 previous commands.
 
-Above command brings the 2nd job to the foreground
+   ```sh
+   history
+   history 15
+   ```
 
-- bg: Changes the state of a stopped background job to running (in the background)
+9. ### jobs
 
-```bash
-bg 2
-```
+   Prints the list of all currently running background processes spawned by the shell in alphabetical order along with the job number and other info. Takes 2 arguments (-s -r)
 
-Above command brings the 4th job to running state in the background
+   ```sh
+   jobs
+   jobs -s
+   jobs -r
+   ```
 
-- replay: This command executes a particular command in fixed time interval for a certain period.
+10. ### sig
 
-```bash
-replay -command echo "hello" >> a.txt -interval 3 -period 6
-```
+      Takes the job number of a running job and sends the signal corresponding to signal number to that process.
 
-Above command runs `echo "hello" >> a.txt` 2 times, once at 3 seconds and then once at 6 seconds
+      ```sh
+      sig 2 9
+      ```
 
-## Exit
+      Above command gives signal 9 to job 2
 
-If you want to exit the shell, type exit
+11. ### fg
+
+      fg Brings the running or stopped background job corresponding to job number to the foreground, and changes its state to running
+
+      ```sh
+      fg 4
+      ```
+
+      Above command brings the 4th job to the foreground
+
+12. ### bg
+
+      Changes the state of a stopped background job to running (in the background)
+
+      ```sh
+      bg 2
+      ```
+
+      Above command brings the 2nd job to running state in the background
+
+13. ### replay
+
+      This command executes a particular command in fixed time interval for a certain period.
+
+      ```sh
+      replay -command echo "hello" >> a.txt -interval 3 -period 6
+      ```
+
+      Above command runs `echo "hello" >> a.txt` 2 times, once at 3 seconds and then once at 6 seconds
+
+14. ### exit
+
+      To exit liteShell, type exit
+
+      ```sh
+      exit
+      ```
 
 ## Screenshots
 

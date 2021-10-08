@@ -101,6 +101,13 @@ char* input()
             printf("%s", autoSug);
             pt += strlen(autoSug);
             break;
+        case 7:
+            memset(inp, 0, SIZE);
+            printf("\n");
+            prompt();
+            pt = 0;
+            callAutoSuggestion(inp, autoSug);
+            break;
         case 9:
         {
             int len = strlen(inp);

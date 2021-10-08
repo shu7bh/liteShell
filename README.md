@@ -2,6 +2,8 @@
 
 It is a linux shell with basic features. It supports most funcitonalities including multiple commands execution and running background and foreground processes. Command and directory autocompletion is also supported.
 
+**New Feature** Auto Suggestions implemented. You can use ^f or right arrow key to complete it
+
 ## Running
 
 Run the following commands on your terminal
@@ -23,6 +25,7 @@ make
 - Input/Output redirection
 - Piping is implemented, so multiple commands can be run directly
 - Handling signal such as ^c, ^z, ^d
+- Auto Suggestions. Shows you a probable suggestion in a greyed out color. It reads it from your history. The more commands you have written, the more likely you will be able to use Auto Suggestions. You can use ^f or right arrow key to fill in the suggestion
 
 ## Commands
 

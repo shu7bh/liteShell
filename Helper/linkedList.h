@@ -15,9 +15,10 @@ struct Node
 };
 
 void makeProcessLinkedList();
-void addProcess(char* name, char** command, int id);
-int searchAndDeleteProcess(char* name, int id);
-Node* getNodeNum(int num);
+void addProcess(char*, char**, int);
+int searchAndDeleteProcess(char*, int);
+
+Node* getNodeNum(int);
 Node* getHead();
 
 #endif

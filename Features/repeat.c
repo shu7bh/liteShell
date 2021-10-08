@@ -1,12 +1,12 @@
 #include "../Helper/callWriitenFunctions.h"
 #include "../Helper/stringToNum.h"
-#include "../headers.h"
 #include "../runCommand.h"
+#include "../headers.h"
 #include "makeChild.h"
-#include "repeat.h"
 #include <stdlib.h>
+#include "repeat.h"
 
-void repeat(int argc, char** argv, int bgFlag)
+void repeat(char** argv, int argc, int bgFlag)
 {
     if (argc == 1)
     {

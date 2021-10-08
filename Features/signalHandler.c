@@ -1,6 +1,6 @@
+#include "../Helper/linkedList.h"
 #include "signalHandler.h"
 #include "../headers.h"
-#include "../Helper/linkedList.h"
 
 void ctrlc(int sig)
 {

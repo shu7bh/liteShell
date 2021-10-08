@@ -1,7 +1,7 @@
-#include "fg.h"
-#include "../headers.h"
-#include "../Helper/linkedList.h"
 #include "../Helper/stringToNum.h"
+#include "../Helper/linkedList.h"
+#include "../headers.h"
+#include "fg.h"
 
 Fg fgDetails;
 

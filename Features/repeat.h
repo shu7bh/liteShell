@@ -1,6 +1,6 @@
 #ifndef REPEAT_H
 #define REPEAT_H
 
-void repeat(int argc, char** argv, int bgFlag);
+void repeat(char**, int, int);
 
 #endif

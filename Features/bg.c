@@ -1,7 +1,7 @@
-#include "bg.h"
-#include "../headers.h"
-#include "../Helper/linkedList.h"
 #include "../Helper/stringToNum.h"
+#include "../Helper/linkedList.h"
+#include "../headers.h"
+#include "bg.h"
 
 void bg(char** argv, int argc)
 {

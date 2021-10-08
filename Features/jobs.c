@@ -1,5 +1,5 @@
-#include "jobs.h"
 #include "../Helper/linkedList.h"
+#include "jobs.h"
 
 void jobs(char** argv, int argc)
 {

@@ -1,12 +1,12 @@
-#include "input.h"
-#include "headers.h"
-#include "Features/history.h"
-#include "Features/prompt.h"
 #include "Features/commandAutoCompletion.h"
 #include "Features/autoSuggestions.h"
+#include "Features/history.h"
+#include "Features/prompt.h"
 #include <termios.h>
+#include "headers.h"
 #include <stdlib.h>
 #include <ctype.h>
+#include "input.h"
 
 void die(const char *s)
 {

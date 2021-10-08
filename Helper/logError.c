@@ -1,5 +1,5 @@
-#include "logError.h"
 #include "../headers.h"
+#include "logError.h"
 
 void logError(const char* error)
 {

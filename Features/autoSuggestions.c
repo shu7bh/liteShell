@@ -1,5 +1,5 @@
-#include "autoSuggestions.h"
 #include "../Helper/homeDir.h"
+#include "autoSuggestions.h"
 #include "../headers.h"
 #include "history.h"
 

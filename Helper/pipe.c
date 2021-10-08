@@ -1,7 +1,7 @@
-#include "pipe.h"
-#include "../headers.h"
-#include "../runCommand.h"
 #include "../Helper/changeIO.h"
+#include "../runCommand.h"
+#include "../headers.h"
+#include "pipe.h"
 
 void pipeIt(char* command)
 {

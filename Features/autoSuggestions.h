@@ -1,6 +1,6 @@
 #ifndef AUTOSUGGESTIONS_H
 #define AUTOSUGGESTIONS_H
 
-char* autoSuggestions(char* inp);
+char* autoSuggestions(char*);
 
 #endif

@@ -1,6 +1,6 @@
 #include "inputOutputRedirection.h"
-#include "changeIO.h"
 #include "../headers.h"
+#include "changeIO.h"
 #include <fcntl.h>
 
 int changeIO(int fd, int current);

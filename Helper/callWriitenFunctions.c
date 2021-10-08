@@ -1,19 +1,19 @@
 #include "callWriitenFunctions.h"
-#include "../headers.h"
-#include "../Features/cd.h"
-#include "../Features/ls.h"
+#include "../Features/history.h"
+#include "../Features/replay.h"
+#include "../Features/repeat.h"
 #include "../Features/pinfo.h"
 #include "../Features/echo.h"
-#include "../Features/repeat.h"
-#include "../Features/history.h"
 #include "../Features/jobs.h"
 #include "../Features/sigs.h"
+#include "../Features/cd.h"
+#include "../Features/ls.h"
 #include "../Features/fg.h"
 #include "../Features/bg.h"
-#include "../Features/replay.h"
+#include "../headers.h"
 #include "linkedList.h"
-#include "cwd.h"
 #include <stdlib.h>
+#include "cwd.h"
 
 int callWrittenFunctions(char** argv, int argc, int bgFlag)
 {
@@ -21,19 +21,19 @@ int callWrittenFunctions(char** argv, int argc, int bgFlag)
     if (!strcmp(argv[0], "cd"))
         cd(argv, argc);
     else if (!strcmp(argv[0], "echo"))
-        echo(argc, argv);
+        echo(argv, argc);
     else if (!strcmp(argv[0], "pwd"))
         printf("%s\n", getCWD());
     else if (!strcmp(argv[0], "exit"))
         exit(0);
     else if (!strcmp(argv[0], "ls"))
-        ls(argc, argv);
+        ls(argv, argc);
     else if (!strcmp(argv[0], "repeat"))
-        repeat(argc, argv, bgFlag);
+        repeat(argv, argc, bgFlag);
     else if (!strcmp(argv[0], "pinfo"))
-        pinfo(argc, argv);
+        pinfo(argv, argc);
     else if (!strcmp(argv[0], "history"))
-        printCommand(argc, argv);
+        printCommand(argv, argc);
     else if (!strcmp(argv[0], "jobs"))
         jobs(argv, argc);
     else if (!strcmp(argv[0], "sig"))

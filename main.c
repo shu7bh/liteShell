@@ -1,14 +1,14 @@
 #include "Features/processTermination.h"
 #include "Features/signalHandler.h"
+#include "Helper/linkedList.h"
 #include "Features/history.h"
 #include "Features/prompt.h"
-#include "Helper/linkedList.h"
 #include "Helper/homeDir.h"
 #include "Helper/pipe.h"
 #include "headers.h"
-#include "input.h"
 #include <signal.h>
 #include <stdlib.h>
+#include "input.h"
 
 void displayGraphicArt();
 

@@ -1,10 +1,10 @@
-#include "pinfo.h"
-#include "../headers.h"
 #include "../Helper/stringToNum.h"
 #include "../Helper/homeDir.h"
 #include "../Helper/token.h"
+#include "../headers.h"
+#include "pinfo.h"
 
-void pinfo(int argc, char **argv)
+void pinfo(char** argv, int argc)
 {
     int pid = argc ? stringToNum(argv[1]) : getpid();
 

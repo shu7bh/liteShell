@@ -1,6 +1,6 @@
-#include "prompt.h"
 #include "../Helper/homeDir.h"
 #include "../headers.h"
+#include "prompt.h"
 
 char name[33], hostname[60], lprompt[1000], cwd[1000];
 void setPromptVar()

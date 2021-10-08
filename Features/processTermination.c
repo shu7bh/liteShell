@@ -1,8 +1,8 @@
-#include "processTermination.h"
 #include "../Helper/linkedList.h"
-#include "prompt.h"
-#include <unistd.h>
+#include "processTermination.h"
 #include <sys/wait.h>
+#include <unistd.h>
+#include "prompt.h"
 #include <stdio.h>
 
 void handleProcessTermination(int sig)

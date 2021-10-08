@@ -1,7 +1,7 @@
 #include "commandAutoCompletion.h"
-#include "../headers.h"
-#include "../Helper/token.h"
 #include "../Helper/homeDir.h"
+#include "../Helper/token.h"
+#include "../headers.h"
 #include "makeChild.h"
 #include <dirent.h>
 

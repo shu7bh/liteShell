@@ -1,7 +1,7 @@
-#include "history.h"
-#include "../headers.h"
-#include "../Helper/homeDir.h"
 #include "../Helper/stringToNum.h"
+#include "../Helper/homeDir.h"
+#include "../headers.h"
+#include "history.h"
 
 const int hNum = 10001;
 char his[10002][SIZE] = {0};
@@ -75,7 +75,7 @@ void writeHistory()
     }
 }
 
-void printCommand(int argc, char** argv)
+void printCommand(char** argv, int argc)
 {
     loadHistory();
     int ct;

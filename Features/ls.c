@@ -1,19 +1,19 @@
-#include "ls.h"
 #include "../Helper/homeDir.h"
 #include "../headers.h"
-#include <dirent.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
+#include <stdlib.h>
 #include <time.h>
 #include <pwd.h>
 #include <grp.h>
+#include "ls.h"
 
 void SearchDir(int a_flag, int l_flag, const char* dir, int dirCt);
 void printStats(const char* dir, const char* name);
 void colors(const char* fullName);
 
-int ls(int argc, char** argv)
+int ls(char** argv, int argc)
 {
     int a_flag = 0, l_flag = 0;
     int dirCt = 0;

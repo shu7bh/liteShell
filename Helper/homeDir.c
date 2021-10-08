@@ -1,5 +1,5 @@
-#include "homeDir.h"
 #include "../headers.h"
+#include "homeDir.h"
 #include "cwd.h"
 
 const char* homeDir;

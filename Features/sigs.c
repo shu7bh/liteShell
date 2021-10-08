@@ -1,7 +1,7 @@
-#include "sigs.h"
-#include "../headers.h"
 #include "../Helper/stringToNum.h"
 #include "../Helper/linkedList.h"
+#include "../headers.h"
+#include "sigs.h"
 
 void sig(char** argv, int argc)
 {

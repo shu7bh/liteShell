@@ -1,9 +1,9 @@
-#include "replay.h"
-#include "../headers.h"
-#include "../Helper/stringToNum.h"
-#include "../runCommand.h"
 #include "../Helper/callWriitenFunctions.h"
 #include "../Features/makeChild.h"
+#include "../Helper/stringToNum.h"
+#include "../runCommand.h"
+#include "../headers.h"
+#include "replay.h"
 
 void replay(char** argv, int argc)
 {

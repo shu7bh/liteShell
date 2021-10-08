@@ -1,5 +1,5 @@
-#include "changeIO.h"
 #include "../headers.h"
+#include "changeIO.h"
 
 int changeIO(int fd, int current)
 {

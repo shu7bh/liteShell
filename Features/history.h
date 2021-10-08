@@ -3,10 +3,12 @@
 
 #include "../headers.h"
 
-void addCommand(char* command);
-void printCommand(int argc, char** argv);
-char* getNextHistory(int* prev);
-char* getPrevHistory(int* prev);
+void addCommand(char*);
+void printCommand(char**, int);
+
+char* getNextHistory(int*);
+char* getPrevHistory(int*);
+
 void loadHistory();
 
 extern char his[10002][SIZE];

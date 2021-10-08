@@ -1,6 +1,6 @@
-#include "cd.h"
 #include "../Helper/homeDir.h"
 #include "../headers.h"
+#include "cd.h"
 
 void cd(char** argv, int argc)
 {

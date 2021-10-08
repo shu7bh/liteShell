@@ -1,2 +1,3 @@
 main:
-	gcc -g *.c Helper/* Features/* -o liteShell
+	gcc *.c Helper/* Features/* -o liteShell
+	g++ .liteShell/trie.cpp -o .liteShell/trie

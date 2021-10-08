@@ -1,15 +1,8 @@
 #
 
-```txt
-.__  .__  __                .__           .__  .__
-|  | |__|/  |_  ____   _____|  |__   ____ |  | |  |
-|  | |  \   __\/ __ \ /  ___/  |  \_/ __ \|  | |  |
-|  |_|  ||  | \  ___/ \___ \|   Y  \  ___/|  |_|  |__
-|____/__||__|  \___  /___   |___|  /\___  |____/____/
-                   \/     \/     \/     \/
-```
+![liteShell](Pics/liteShell.png)
 
-*Ease with comfort* $\text{---}$ that's what liteShell is all about!
+*Ease with comfort* — that's what liteShell is all about!
 
 liteShell provides you with a whole new experience by introducing a fancy, memorable shell that allows you to handle commands without a monotonous overtone.
 

@@ -21,8 +21,11 @@ void preRunCommand(char* inputBuffer)
     runCommand(argv, argc, bgFlag);
 
     for (int i = 0; i <= argc; ++i)
-        free(argv[i]);
+        if (argv[i])
+            free(argv[i]);
     free(argv);
+    free(temp);
+    temp = 0;
     argv = 0;
 }
 

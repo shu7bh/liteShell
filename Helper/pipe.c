@@ -37,5 +37,11 @@ void pipeIt(char* command)
     preRunCommand(argv[i - 1]);
     changeIO(stdinCopy, STDIN_FILENO);
 
+    for (int j = 0; j < i; ++j)
+        if (argv[i])
+        {
+            free(argv[i]);
+            argv[i] = 0;
+        }
     free(str);
 }

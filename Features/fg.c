@@ -22,10 +22,8 @@ void fg(char** argv, int argc)
         return;
     }
 
-    char temp[SIZE];
-    fgDetails.pid = node->id;
-    strcpy(fgDetails.command, node->command);
-    strcpy(fgDetails.name, node->name);
+
+    addFg(node->id, node->name, node->command);
 
     if (kill(node->id, SIGCONT))
     {
@@ -33,6 +31,7 @@ void fg(char** argv, int argc)
         return;
     }
 
+    char temp[SIZE];
     searchAndDeleteProcess(temp, node->id);
 
     int status;

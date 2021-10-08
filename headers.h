@@ -21,8 +21,14 @@ typedef struct Fg
 
 extern Fg fgDetails;
 extern int color;
+
+// Clears input for the global variable fgDetails
 void clearFg();
+
+// Sets fgDetails
 void addFgAr(int pid, char** command);
+
+// Sets fgDetails
 void addFg(int pid, char* name, char* command);
 
 #endif

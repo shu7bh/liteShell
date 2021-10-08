@@ -14,11 +14,19 @@ struct Node
     Node* next;
 };
 
+// Makes the linked list
 void makeProcessLinkedList();
+
+// Adds a process to the linked list
 void addProcess(char*, char**, int);
+
+// Searches and deletes a process based on the pid
 int searchAndDeleteProcess(char*, int);
 
+// Gets the node based on the job number
 Node* getNodeNum(int);
+
+// Gets the head of the linked list
 Node* getHead();
 
 #endif

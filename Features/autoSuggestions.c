@@ -6,7 +6,7 @@
 char* autoSuggestions(char* inp)
 {
     if (!inp || !end)
-        return 0;
+        return "";
 
     int ct = 1;
     while (end - ct >= 0 && strncmp(his[end - ct], inp, strlen(inp)))

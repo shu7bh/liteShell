@@ -2,31 +2,51 @@
 #include "../headers.h"
 #include "prompt.h"
 
-char name[33], hostname[60], lprompt[1000], cwd[1000];
+int commandTime = 0;
+
 void setPromptVar()
 {
     setHomeDirVar();
-    getlogin_r(name, 32);
-    gethostname(hostname, sizeof(hostname));
-    sprintf(lprompt, "<%s@%s:", name, hostname);
 }
 
 void prompt()
 {
+    char cwd[1000];
     char varPrompt[500];
-    if (getcwd(cwd, sizeof(cwd)))
+    if (!getcwd(cwd, sizeof(cwd)))
     {
-        if (!strcmp(cwd, getHomeDir()))
-            sprintf(varPrompt, "~");
-        else if (strstr(cwd, getHomeDir()))
-            sprintf(varPrompt, "~%s", cwd + strlen(getHomeDir()));
-        else
-            sprintf(varPrompt, "%s", cwd);
-
-        cPrompt();
-        printf("%s%s> ", lprompt, varPrompt);
-        reset();
-    }
-    else
         logError("getcwd() error");
+        return;
+    }
+
+    if (!strcmp(cwd, getHomeDir()))
+        sprintf(varPrompt, "~");
+    else if (strstr(cwd, getHomeDir()))
+        sprintf(varPrompt, "~%s", cwd + strlen(getHomeDir()));
+    else
+        sprintf(varPrompt, "%s", cwd);
+
+    char* p = strrchr(varPrompt, '/');
+
+    if (p && strcmp(p, varPrompt))
+        strcpy(varPrompt, p + 1);
+
+    char timePrompt[SIZE] = {0};
+    if (commandTime)
+    {
+        if (commandTime > 60)
+            sprintf(timePrompt, "took %dm%ds ", commandTime / 60, commandTime % 60);
+        else
+        sprintf(timePrompt, "took %ds ", commandTime);
+    }
+
+    cPrompt();
+    printf("%s ", varPrompt);
+    yellow();
+    printf("%s", timePrompt);
+    red();
+    printf(" ");
+    reset();
+
+    reset();
 }

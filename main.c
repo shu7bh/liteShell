@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include "input.h"
+#include <time.h>
 
 void displayGraphicArt();
 
@@ -26,12 +27,16 @@ int main()
     signal(SIGCHLD, handleProcessTermination);
 
     displayGraphicArt();
+    time_t start = time(0);
 
     while (1)
     {
+        time_t end = time(0);
+        commandTime = (int) (end - start);
         prompt();
         char* inp = input();
 
+        start = time(0);
         addCommand(inp);
 
         for (char *safePtr, *token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))

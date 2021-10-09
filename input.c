@@ -111,14 +111,7 @@ char* input()
         case 9:
         {
             int len = strlen(inp);
-            if (!autoComplete(inp, &commandCompleteCt, 1))
-            {
-                commandCompleteCt = 0;
-                inp[pt++] = c;
-                for (int i = 0; i < 8; i++)  // TABS should be 8 spaces
-                    printf(" ");
-            }
-            else
+            if (autoComplete(inp, &commandCompleteCt, 1))
                 commandComplete(inp, len, &pt);
 
             callAutoSuggestion(inp, autoSug);
@@ -182,10 +175,7 @@ char* input()
             commandCompleteCt = 0;
             if (pt > 0)
             {
-                if (inp[pt-1] == 9)
-                    for (int i = 0; i < 7; i++)
-                        printf("\b");
-                inp[--pt] = '\0';
+                inp[--pt] = 0;
                 printf("\b \b");
             }
             callAutoSuggestion(inp, autoSug);

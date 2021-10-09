@@ -21,6 +21,7 @@ typedef struct Fg
 
 extern Fg fgDetails;
 extern int color;
+extern int commandTime;
 
 // Clears input for the global variable fgDetails
 void clearFg();

@@ -55,7 +55,6 @@ void makeChildBg(char** argv)
 
     default:
         setpgid(pid, 0);
-        printf("%d\n", pid);
         addProcess(argv[0], argv, pid);
     }
 }

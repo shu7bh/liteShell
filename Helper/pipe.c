@@ -6,6 +6,12 @@
 void pipeIt(char* command)
 {
     char* str = strdup(command);
+    if (!str)
+    {
+        logError("strdup error");
+        return;
+    }
+
     char* safePtr;
 
     int stdoutCopy = dup(STDOUT_FILENO);
@@ -15,7 +21,15 @@ void pipeIt(char* command)
 
     int i = 0;
     for (char* token = strtok_r(command, "|", &safePtr); token; token = strtok_r(NULL, "|", &safePtr))
+    {
         argv[i++] = strdup(token);
+
+        if (!argv[i - 1])
+        {
+            logError("strdup error");
+            return;
+        }
+    }
 
     int fd[2];
     color = 0;

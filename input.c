@@ -53,6 +53,13 @@ void callAutoSuggestion(char* inp, char* autoSug)
 char* input()
 {
     char *inp = malloc(SIZE);
+
+    if (!inp)
+    {
+        logError("malloc error");
+        return "";
+    }
+
     char c;
 
     setbuf(stdout, NULL);

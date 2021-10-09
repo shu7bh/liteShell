@@ -199,7 +199,7 @@ void printStats(const char* fullName, const char* name)
     else
         printf("  %15u", statInfo.st_gid);
 
-    printf("  %7ld", statInfo.st_size);
+    printf("  %15ld", statInfo.st_size);
 
     struct tm time_last, time_present;
     char time_val[256];

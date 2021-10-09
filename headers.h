@@ -19,7 +19,17 @@ typedef struct Fg
     char command[SIZE];
 } Fg;
 
+extern Fg fgDetails;
 extern int color;
 extern int commandTime;
+
+// Clears input for the global variable fgDetails
+void clearFg();
+
+// Sets fgDetails
+void addFgAr(int pid, char** command);
+
+// Sets fgDetails
+void addFg(int pid, char* name, char* command);
 
 #endif

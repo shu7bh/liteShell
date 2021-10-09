@@ -11,7 +11,21 @@
 void preRunCommand(char* inputBuffer)
 {
     char* temp = strdup(inputBuffer);
+
+    if (!temp)
+    {
+        logError("strdup error");
+        return;
+    }
+
     char** argv = malloc(SIZE * sizeof(char*));
+
+    if (!argv)
+    {
+        logError("malloc error");
+        return;
+    }
+
     int argc = 0;
     int bgFlag;
 

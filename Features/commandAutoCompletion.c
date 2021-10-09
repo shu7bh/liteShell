@@ -32,6 +32,12 @@ int autoComplete(char* command, int* ct, int addOrSub)
     strcpy(inp, command);
 
     char** argv = malloc(SIZE);
+    if (!argv)
+    {
+        logError("malloc error");
+        return 0;
+    }
+
     int argc, temp;
 
     if (!tokenize(inp, argv, &argc, &temp))
@@ -113,6 +119,12 @@ int autoComplete(char* command, int* ct, int addOrSub)
         char* commandArg[2];
         sprintf(path, "%s/%s", getHomeDir(), ".liteShell/trie");
         commandArg[0] = strdup(path);
+        if (!commandArg[0])
+        {
+            logError("strdup error");
+            return 0;
+        }
+
         commandArg[1] = 0;
 
         closedir(d);

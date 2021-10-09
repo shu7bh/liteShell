@@ -12,8 +12,8 @@ void setPromptVar()
 void prompt()
 {
     printf("\r");
-    char cwd[1000];
-    char varPrompt[500];
+    char cwd[SIZE];
+    char varPrompt[SIZE];
     if (!getcwd(cwd, sizeof(cwd)))
     {
         logError("getcwd() error");
@@ -30,7 +30,12 @@ void prompt()
     char* p = strrchr(varPrompt, '/');
 
     if (p && strcmp(p, varPrompt))
-        strcpy(varPrompt, p + 1);
+    {
+        char temp[SIZE];
+        strcpy(temp, p + 1);
+        memset(varPrompt, 0, SIZE);
+        strcpy(varPrompt, temp);
+    }
 
     char timePrompt[SIZE] = {0};
     if (commandTime)

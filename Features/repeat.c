@@ -23,10 +23,24 @@ void repeat(char** argv, int argc, int bgFlag)
     }
 
     char** command = malloc(sizeof(char*) * argc - 1);
+
+    if (!command)
+    {
+        logError("malloc error");
+        return;
+    }
+
     int ct = -1;
 
     for (int i = 2; i <= argc; ++i)
+    {
         command[++ct] = strdup(argv[i]);
+        if (!command[ct])
+        {
+            logError("strdup error");
+            return;
+        }
+    }
 
     command[ct + 1] = 0;
 

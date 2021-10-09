@@ -25,7 +25,7 @@ int callWrittenFunctions(char** argv, int argc, int bgFlag)
     else if (!strcmp(argv[0], "pwd"))
         printf("%s\n", getCWD());
     else if (!strcmp(argv[0], "exit"))
-        exit(0);
+        printf("\n"), exit(0);
     else if (!strcmp(argv[0], "ls"))
         ls(argv, argc);
     else if (!strcmp(argv[0], "repeat"))

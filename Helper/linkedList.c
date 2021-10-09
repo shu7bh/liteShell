@@ -1,5 +1,6 @@
 #include "linkedList.h"
 #include "../headers.h"
+#include <stdlib.h>
 
 Node* head;
 Node* createProcess();
@@ -24,6 +25,8 @@ void addProcess(char* name, char** command, int id)
     strcpy(node->command, str);
     node->id = id;
     node->num = ++num;
+
+    printf("\r[%d] %d\n", num, id);
 
     Node* temp = head;
 
@@ -63,6 +66,11 @@ int searchAndDeleteProcess(char* name, int id)
 Node* createProcess()
 {
     Node* node = malloc(sizeof(Node));
+    if (!node)
+    {
+        logError("malloc error");
+        exit(EXIT_FAILURE);
+    }
 
     memset(node->name, 0, SIZE);
     memset(node->command, 0, SIZE);

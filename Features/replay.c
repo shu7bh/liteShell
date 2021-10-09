@@ -19,6 +19,13 @@ void replay(char** argv, int argc)
     int start = 0, end = 0;
 
     char** command = malloc(sizeof(char*) * argc - 4);
+
+    if (!command)
+    {
+        logError("malloc error");
+        return;
+    }
+
     int ct = -1;
 
     for (int i = 1; i <= argc; ++i)
@@ -62,15 +69,15 @@ void replay(char** argv, int argc)
     val[0] = stringToNum(str[0]);
     val[1] = stringToNum(str[1]);
 
-    if (val[0] == -1)
+    if (val[0] <= 0)
     {
-        logStdError("interval needs an whole number agument");
+        logStdError("interval needs a number greater than 0");
         return;
     }
 
-    if (val[1] == -1)
+    if (val[1] <= 0)
     {
-        logStdError("period needs an whole number agument");
+        logStdError("period needs a number greater than 0");
         return;
     }
 

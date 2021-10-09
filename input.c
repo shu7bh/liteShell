@@ -95,6 +95,7 @@ char* input()
             break;
         }
         case 4:
+            printf("\n");
             exit(0);
         case 6:
             strcat(inp, autoSug);

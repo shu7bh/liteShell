@@ -11,6 +11,7 @@ void setPromptVar()
 
 void prompt()
 {
+    printf("\r");
     char cwd[1000];
     char varPrompt[500];
     if (!getcwd(cwd, sizeof(cwd)))

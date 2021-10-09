@@ -15,7 +15,7 @@ void displayGraphicArt();
 
 int main()
 {
-    clearFg();
+    /*clearFg();*/
 
     setPromptVar();
     loadHistory();

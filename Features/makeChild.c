@@ -1,6 +1,7 @@
 #include "../Helper/linkedList.h"
 #include "../headers.h"
 #include "makeChild.h"
+#include "prompt.h"
 #include <stdlib.h>
 
 void makeChildFg(char** argv)
@@ -19,10 +20,17 @@ void makeChildFg(char** argv)
         return;
 
     default:
-        addFgAr(pid, argv);
-        int status;
-        pid_t wpid = waitpid(pid, &status, WUNTRACED);
-        clearFg();
+        {
+            int status;
+            pid_t wpid = waitpid(pid, &status, WUNTRACED);
+
+            if (WIFSTOPPED(status))
+            {
+                kill(pid, SIGTSTP);
+                addProcess(argv[0], argv, pid);
+                prompt();
+            }
+        }
     }
 }
 
@@ -33,12 +41,12 @@ void makeChildBg(char** argv)
     switch(pid)
     {
     case 0:
+        setpgid(0, 0);
         if (execvp(argv[0], argv) == -1)
         {
-            char temp[100];
             logError("Command not found");
+            prompt();
         }
-
         exit(0);
 
     case -1:
@@ -46,7 +54,8 @@ void makeChildBg(char** argv)
         return;
 
     default:
+        setpgid(pid, 0);
+        printf("%d\n", pid);
         addProcess(argv[0], argv, pid);
-        printf("%u\n", pid);
     }
 }

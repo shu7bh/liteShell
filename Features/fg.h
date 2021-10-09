@@ -5,6 +5,6 @@
 void fg(char**, int);
 
 // Clears the fgDetails
-void clearFg();
+//void clearFg();
 
 #endif

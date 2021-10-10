@@ -250,7 +250,19 @@ make
 
       Above command runs `echo "hello" >> a.txt` 2 times, once at 3 seconds and then once at 6 seconds
 
-14. ### exit
+14. ### baywatch
+
+      This command executes a particular watch every n seconds
+
+      ```sh
+      baywatch -n 5 interrupt
+      baywatch -n 2 dirty
+      baywatch -n 10 newborn
+      ```
+
+      The first command on the top prints the interrupt for the CPUs every 5 seconds unless q is pressed.
+
+15. ### exit
 
       To exit liteShell, type exit
 
@@ -260,4 +272,5 @@ make
 
 ## Screenshots
 
-![ss](Pics/ss.png)
+![ss_1](Pics/ss_1.png)
+![ss_2](Pics/ss_2.png)

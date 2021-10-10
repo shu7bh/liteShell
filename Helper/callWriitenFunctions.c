@@ -1,4 +1,5 @@
 #include "callWriitenFunctions.h"
+#include "../Features/baywatch.h"
 #include "../Features/history.h"
 #include "../Features/replay.h"
 #include "../Features/repeat.h"
@@ -44,6 +45,8 @@ int callWrittenFunctions(char** argv, int argc, int bgFlag)
         bg(argv, argc);
     else if (!strcmp(argv[0], "replay"))
         replay(argv, argc);
+    else if (!strcmp(argv[0], "baywatch"))
+        bayWatch(argv, argc);
     else
         present = 0;
     return present;

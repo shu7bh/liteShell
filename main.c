@@ -15,8 +15,6 @@ void displayGraphicArt();
 
 int main()
 {
-    /*clearFg();*/
-
     setPromptVar();
     loadHistory();
     makeProcessLinkedList();
@@ -39,6 +37,7 @@ int main()
         start = time(0);
         addCommand(inp);
 
+        clearFg();
         for (char *safePtr, *token = strtok_r(inp, ";", &safePtr); token; token = strtok_r(NULL, ";", &safePtr))
             pipeIt(token);
 

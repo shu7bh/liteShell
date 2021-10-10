@@ -71,6 +71,7 @@ char* input()
     int commandCompleteCt = 0;
     char autoSug[SIZE] = {0};
 
+    promptReset();
     while (read(STDIN_FILENO, &c, 1) == 1)
     {
         for (int i = 0; i <= strlen(autoSug); ++i)

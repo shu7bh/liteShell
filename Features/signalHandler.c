@@ -14,7 +14,7 @@ void ctrlc(int sig)
 
 void ctrlz(int sig)
 {
-    if (fgDetails.pid != -1)
+    if (fgDetails.pid > 0)
     {
         printf("\r");
         kill(fgDetails.pid, SIGTSTP);

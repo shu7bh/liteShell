@@ -38,6 +38,7 @@ void fg(char** argv, int argc)
     if (waitpid(pid, &status, WUNTRACED) == -1)
         logError("waitpid error");
 
+    clearFg();
     return;
 }
 void clearFg()

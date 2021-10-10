@@ -7,6 +7,8 @@
 void makeChildFg(char** argv)
 {
     pid_t pid = fork();
+    int status;
+    pid_t wpid;
 
     switch(pid)
     {
@@ -20,16 +22,13 @@ void makeChildFg(char** argv)
         return;
 
     default:
-        {
-            int status;
-            pid_t wpid = waitpid(pid, &status, WUNTRACED);
+        wpid = waitpid(pid, &status, WUNTRACED);
 
-            if (WIFSTOPPED(status))
-            {
-                kill(pid, SIGTSTP);
-                addProcess(argv[0], argv, pid);
-                prompt();
-            }
+        if (WIFSTOPPED(status))
+        {
+            kill(pid, SIGTSTP);
+            addProcess(argv[0], argv, pid);
+            prompt();
         }
     }
 }

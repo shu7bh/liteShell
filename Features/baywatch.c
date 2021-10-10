@@ -87,16 +87,13 @@ void bayWatch(char** argv, int argc)
             return;
         }
 
-    char* str = malloc(SIZE);
-    char* safePtr;
-    char* token;
-
-    size_t size = SIZE;
-
     if (flag < 0)
         return;
 
+    char *str = malloc(SIZE), *safePtr, *token;
+    size_t size = SIZE;
     time_t start = time(0), end;
+    int ct = 0;
 
     while (1)
     {
@@ -105,12 +102,12 @@ void bayWatch(char** argv, int argc)
         {
             reset_terminal_mode();
             end = time(0);
-            commandTime = (int) (end - start);
 
-            if (commandTime > num)
+            if (end - start >= num)
             {
+                start = end;
                 char display[SIZE] = {0};
-                start = time(0);
+
                 switch (flag)
                 {
                 case 2:
@@ -143,6 +140,9 @@ void bayWatch(char** argv, int argc)
                         strcat(display, token), strcat(display, "\t");
 
                     strcat(display, "\n");
+
+                    if (ct++)
+                        memset(display, 0, SIZE);
 
                     for (int i = 0; i < 2; ++i)
                         getline(&str, &size, fin);

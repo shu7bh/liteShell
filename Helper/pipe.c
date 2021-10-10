@@ -20,13 +20,16 @@ void pipeIt(char* command)
     char* argv[SIZE];
 
     int i = 0;
-    for (char* token = strtok_r(command, "|", &safePtr); token; token = strtok_r(NULL, "|", &safePtr))
+    for (char* token = strtok_r(str, "|", &safePtr); token; token = strtok_r(NULL, "|", &safePtr))
     {
         argv[i++] = strdup(token);
 
         if (!argv[i - 1])
         {
             logError("strdup error");
+            for (int j = 0; j < i; ++j)
+                free (argv[j]);
+            free(str);
             return;
         }
     }
@@ -51,7 +54,7 @@ void pipeIt(char* command)
     preRunCommand(argv[i - 1]);
     changeIO(stdinCopy, STDIN_FILENO);
 
-    for (int j = 0; j < i; ++j)
+    for (int j = 0; j <= i; ++j)
         if (argv[i])
         {
             free(argv[i]);

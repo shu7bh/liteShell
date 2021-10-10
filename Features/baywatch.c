@@ -138,14 +138,9 @@ void bayWatch(char** argv, int argc)
                 case 0:
                     getline(&str, &size, fin);
 
-                    token = strtok_r(str, " \t\n", &safePtr);
-                    strcat(display, token); strcat(display, "\t");
-
-                    for (int i = 0; i < 7; ++i)
-                    {
-                        token = strtok_r(NULL, " \t\n", &safePtr);
-                        strcat(display, token); strcat(display, "\t");
-                    }
+                    int  i = 0;
+                    for (token = strtok_r(str, " \t\n", &safePtr); token; ++i, token = strtok_r(NULL, " \t\n", &safePtr))
+                        strcat(display, token), strcat(display, "\t");
 
                     strcat(display, "\n");
 
@@ -154,7 +149,7 @@ void bayWatch(char** argv, int argc)
 
                     token = strtok_r(str, " \t\n", &safePtr);
 
-                    for (int i = 0; i < 8; ++i)
+                    for (int j = 0; j < i; ++j)
                     {
                         token = strtok_r(NULL, " \t\n", &safePtr);
                         strcat(display, token); strcat(display, "\t");

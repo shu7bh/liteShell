@@ -87,7 +87,7 @@ void bayWatch(char** argv, int argc)
             return;
         }
 
-    char* str;
+    char* str = malloc(SIZE);
     char* safePtr;
     char* token;
 
